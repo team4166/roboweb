@@ -1,0 +1,187 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+	<title> 
+		How to move an element in a 
+		Circular Path using CSS ? 
+	</title> 
+	
+	<style> 
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+        
+        .ring3 {
+            position: absolute;
+            z-index: -1;
+            width: 900px; 
+			height: 900px; 
+			border-radius: 50%; 
+			border: solid white;
+        }
+        
+        .ring2 {
+            position: absolute;
+            z-index: -1;
+            width: 500px; 
+			height: 500px; 
+			border-radius: 50%; 
+			border: solid white;
+        }
+        
+        .ring1 {
+            position: absolute;
+            z-index: -1;
+            width: 250px; 
+			height: 250px; 
+			border-radius: 50%; 
+			border: solid white;
+        }
+        
+        .container {
+            height: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: solid;
+        }
+
+		.planet1 {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			width: 25px; 
+			height: 25px; 
+			border-radius: 50%; 
+			background-color: green;
+            --orbitDistance: 125px;
+			animation: orbit 2s infinite linear; 
+		}
+        
+        .moon1 {
+            position: absolute;
+			width: 10px; 
+			height: 10px; 
+			border-radius: 50%; 
+			background-color: white; 
+            --orbitDistance: 25px;
+			animation: orbit 3s infinite linear;
+        }
+        
+        .planet2 {
+            position: absolute;
+			width: 50px; 
+			height: 50px; 
+			border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			background-color: orange;
+            --orbitDistance: 250px;
+			animation: orbit 15s infinite linear; 
+		} 
+        
+        .moon2 {
+            position: absolute;
+			width: 10px; 
+			height: 10px; 
+			border-radius: 50%; 
+			background-color: white; 
+            --orbitDistance: 50px;
+			animation: orbit 2s infinite linear reverse;
+        }
+        
+        .sun {
+            width: 100px; 
+			height: 100px; 
+			border-radius: 50%; 
+			background-color: yellow; 
+        }
+        
+        .planet3 {
+            position: absolute;
+            z-index: 1;
+			width: 100px; 
+			height: 100px; 
+			border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+			background-color: blue; 
+            --orbitDistance: 450px;
+			animation: orbit 60s infinite linear; 
+		} 
+        
+        .moon3 {
+            position: absolute;
+			width: 10px; 
+			height: 10px; 
+			border-radius: 50%; 
+			background-color: white; 
+            --orbitDistance: 70px;
+			animation: orbit 2s infinite linear;
+        }
+        
+        .moon4 {
+            position: absolute;
+			width: 10px; 
+			height: 10px; 
+			border-radius: 50%; 
+			background-color: white; 
+            --orbitDistance: 90px;
+			animation: orbit 5s infinite linear reverse;
+        }
+        
+        .moon5 {
+            position: absolute;
+			width: 10px; 
+			height: 10px; 
+			border-radius: 50%; 
+			background-color: white; 
+            --orbitDistance: 100px;
+			animation: orbit 10s infinite linear reverse;
+        }
+
+		@keyframes orbit { 
+			0% { 
+				transform: 
+                    rotate(0deg) 
+                    translateY(var(--orbitDistance));
+			}
+
+			100% { 
+				transform: 
+                    rotate(360deg) 
+					translateY(var(--orbitDistance));
+			} 
+		}
+	</style> 
+</head> 
+
+<body> 
+
+    <div class="container">
+        <div class="ring3"></div>
+        <div class="ring2"></div>
+        <div class="ring1"></div>
+        <div class="sun"></div>
+        <div class="planet1">
+            <div class="moon1"></div>
+        </div>
+        <div class="planet2">
+            <div class="moon2"></div>
+        </div>
+        <div class="planet3">
+            <div class="moon3"></div>
+            <div class="moon4"></div>
+            <div class="moon5"></div>
+        </div>
+    </div>
+	
+</body> 
+
+</html>
