@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ gh-pages ]  # Note: targeting gh-pages branch
+    paths:
+      - 'buttons/**'  # Only trigger on changes in buttons directory
   workflow_dispatch:
 
 jobs:
@@ -20,13 +22,16 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
+        working-directory: ./buttons  # Add this line
         run: npm ci
 
       - name: Build
+        working-directory: ./buttons  # Add this line
         run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./buttons/dist  # Update this path
+          keep_files: true  # Important! Preserves other files
