@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>#4166 Robostangs</title>
+        <style>
+            body {
+                background-image: url('circuit_bg_full.jpg');
+                background-size: cover;
+                background-attachment: fixed;
+                background-position: center;
+                margin: 0;
+                color: #333;
+            }
+
+            .content-wrapper {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1rem;
+            }
+
+            .box {
+                background-color: rgba(255, 255, 255, 0.95);
+                border: solid 1px black;
+                margin: 1rem 0;
+                padding: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .bluebox {
+                background-color: rgba(0, 61, 165, 0.95);
+                color: white;
+            }
+
+            .centerStuff {
+                text-align: center;
+            }
+
+            .mainheader {
+                padding: 3rem 1rem;
+                margin-top: 0;
+                border-radius: 0 0 8px 8px;
+            }
+
+            .members {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                border: solid 1px black;
+                background-color: rgba(255, 255, 255, 0.95);
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            .member {
+                width: 250px;
+                background-color: white;
+                border: solid 1px black;
+                border-left: 10px solid #003DA5;
+                padding: 15px;
+                margin: 15px;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .name, .title {
+                margin: 0;
+                padding: 0;
+            }
+
+            a:link, a:visited {
+                color: #003DA5;
+                text-decoration: underline;
+            }
+
+            a:hover {
+                color: #0055e5;
+            }
+
+            .action-button {
+                background: linear-gradient(to bottom right, #003DA5, #0066ff);
+                color: white !important;
+                padding: 8px 16px;
+                text-align: center;
+                text-decoration: none;
+                font-size: large;
+                display: inline-block;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+            }
+
+            .action-button:hover {
+                background: linear-gradient(to top left, #003DA5, #0066ff);
+                transform: scale(1.05);
+                color: white !important;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            ul li {
+                margin: 1rem 0;
+            }
+
+            iframe {
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="content-wrapper">
+            <div class="box bluebox mainheader centerStuff">
+                <h1>Robostangs</h1>
+                <p>Mora MN Robotics Team</p>
+                <img src="4166_logo_outline.png" width="200" alt="Robostangs Logo"/>
+            </div> 
+
+            <div class="box centerStuff">
+                <h4>What we're about</h4>
+                <p>
+                    Mission: Our mission is to inspire young people to be science and technology leaders, by engaging them in exciting mentor-based programs that build science, engineering and technology skills, that inspire innovation, and that foster well-rounded life capabilities including self-confidence, communication, and leadership.
+                </p>
+            </div>
+
+            <div class="box bluebox centerStuff">The team</div>
+            <p>Coaches</p>
+            <div id="coaches" class="members"></div>
+            <p>Team Members</p>
+            <div id="members" class="members"></div>
+
+            <div class="box bluebox centerStuff">Socials</div>
+            <div class="box centerStuff">
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter(X)</li>
+                    <li>Instagram</li>
+                    <li><a href="https://robostangs4166.github.io/button-maker/" class="action-button">Button maker tool</a></li>
+                </ul>
+            </div>
+
+            <div class="box bluebox centerStuff">
+                <h2>FIRST Robotics 2025 Game: Reefscape</h2>
+            </div>
+            <div class="box">
+                <p>
+                    In 2025, we're excited to compete in FIRST Robotics' latest challenge called "Reefscape". 
+                    In this competition, teams design and build robots to help protect coral reef environments. 
+                    Our robots will work to remove harmful algae and strategically place new coral to restore 
+                    reef habitats. Each match presents a unique challenge where teams must demonstrate both 
+                    precise control and efficient automation.
+                </p>
+                <p>
+                    Watch the video below to learn more about this year's exciting competition!
+                </p>
+            </div>
+
+            <div class="box centerStuff">
+                <iframe width="560" height="315" 
+                    src="https://www.youtube.com/embed/YWbxcjlY9JY?si=5JmhsbmwmPp-7ih-" 
+                    title="YouTube video player" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
