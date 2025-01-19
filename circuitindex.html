@@ -15,14 +15,14 @@
             .content-wrapper {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 1rem;
+                padding: 0.5rem;
             }
 
             .box {
                 background-color: rgba(255, 255, 255, 0.95);
                 border: solid 1px black;
-                margin: 1rem 0;
-                padding: 1.5rem;
+                margin: 0.5rem 0;
+                padding: 0.75rem;
                 border-radius: 8px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
@@ -30,6 +30,7 @@
             .bluebox {
                 background-color: rgba(0, 61, 165, 0.95);
                 color: white;
+                padding: 0.5rem;
             }
 
             .centerStuff {
@@ -37,19 +38,44 @@
             }
 
             .mainheader {
-                padding: 3rem 1rem;
+                padding: 1.5rem 1rem;
                 margin-top: 0;
                 border-radius: 0 0 8px 8px;
             }
 
+            .mainheader h1 {
+                margin: 0.5rem 0;
+            }
+
+            .mainheader p {
+                margin: 0.5rem 0;
+            }
+
+            .mission-section h4 {
+                margin: 0.25rem 0;
+            }
+
+            .mission-section p {
+                margin: 0.5rem 0;
+            }
+
             .members {
+                border: solid 1px black;
+                background-color: rgba(255, 255, 255, 0.95);
+                padding: 0.5rem;
+                border-radius: 8px;
+                margin-top: 0.25rem;
+            }
+
+            .members-grid {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                border: solid 1px black;
-                background-color: rgba(255, 255, 255, 0.95);
-                padding: 1rem;
-                border-radius: 8px;
+            }
+
+            .full-width {
+                width: 100%;
+                margin: 0.25rem 0 0.75rem 0;
             }
 
             .member {
@@ -57,8 +83,8 @@
                 background-color: white;
                 border: solid 1px black;
                 border-left: 10px solid #003DA5;
-                padding: 15px;
-                margin: 15px;
+                padding: 12px;
+                margin: 8px;
                 border-radius: 4px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             }
@@ -98,10 +124,24 @@
             ul {
                 list-style: none;
                 padding: 0;
+                margin: 0.5rem 0;
             }
 
             ul li {
-                margin: 1rem 0;
+                margin: 0.5rem 0;
+            }
+
+            .section-label {
+                margin: 0.25rem 0;
+                font-weight: bold;
+            }
+
+            .game-description {
+                margin: 0.5rem 0;
+            }
+
+            .game-description p {
+                margin: 0.5rem 0;
             }
 
             iframe {
@@ -120,7 +160,7 @@
                 <img src="4166_logo_outline.png" width="200" alt="Robostangs Logo"/>
             </div> 
 
-            <div class="box centerStuff">
+            <div class="box centerStuff mission-section">
                 <h4>What we're about</h4>
                 <p>
                     Mission: Our mission is to inspire young people to be science and technology leaders, by engaging them in exciting mentor-based programs that build science, engineering and technology skills, that inspire innovation, and that foster well-rounded life capabilities including self-confidence, communication, and leadership.
@@ -128,10 +168,14 @@
             </div>
 
             <div class="box bluebox centerStuff">The team</div>
-            <p>Coaches</p>
-            <div id="coaches" class="members"></div>
-            <p>Team Members</p>
-            <div id="members" class="members"></div>
+            <div class="members">
+                <h3 class="section-label full-width centerStuff">Coaches</h3>
+                <div id="coaches" class="members-grid"></div>
+            </div>
+            <div class="members">
+                <h3 class="section-label full-width centerStuff">Team Members</h3>
+                <div id="members" class="members-grid"></div>
+            </div>
 
             <div class="box bluebox centerStuff">Socials</div>
             <div class="box centerStuff">
@@ -144,9 +188,9 @@
             </div>
 
             <div class="box bluebox centerStuff">
-                <h2>FIRST Robotics 2025 Game: Reefscape</h2>
+                <h2 style="margin: 0;">FIRST Robotics 2025 Game: Reefscape</h2>
             </div>
-            <div class="box">
+            <div class="box game-description">
                 <p>
                     In 2025, we're excited to compete in FIRST Robotics' latest challenge called "Reefscape". 
                     In this competition, teams design and build robots to help protect coral reef environments. 
@@ -154,9 +198,7 @@
                     reef habitats. Each match presents a unique challenge where teams must demonstrate both 
                     precise control and efficient automation.
                 </p>
-                <p>
-                    Watch the video below to learn more about this year's exciting competition!
-                </p>
+                <p>Watch the video below to learn more about this year's exciting competition!</p>
             </div>
 
             <div class="box centerStuff">
