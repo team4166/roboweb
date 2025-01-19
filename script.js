@@ -22,74 +22,82 @@ function makeList() {
         },
         {
             name: "Chris Stassen",
-            title: "Mentor, Past Captain"
+            title: "Alumni Captain Mentor"
         }
     ];
     const membersList = [
         {
-            name: "Royal Johnson",
-            title: "Building Team"
-        },
-        {
-            name: "Sami Syverson",
-            title: "Robotics"
-        },
-        {
-            name: "Sydney Reed",
-            title: "Robotics"
-        },
-        {
-            name: "Titus Hamilton",
-            title: "Robotics"
+            name: "Olof Bakke",
+            title: "Fabrication/ Team captain 24&25"
         },
         {
             name: "Annabell Fanfulik",
-            title: "Robotics"
-        },
-        {
-            name: "Brittainica Hansen",
-            title: "Robotics"
-        },
-        {
-            name: "Debra Ritter",
-            title: "Robotics"
-        },
-        {
-            name: "Mike Anderson",
-            title: "Robotics"
-        },
-        {
-            name: "McKenzie Rodenberg",
-            title: "Robotics"
-        },
-        {
-            name: "Teah Van Hale",
-            title: "Robotics"
+            title: "Website team"
         },
         {
             name: "Brayden Packer",
-            title: "Robotics"
+            title: "Fabrication"
         },
         {
-            name: "Timothy Ryan",
-            title: "Robotics"
-        },
-        {
-            name: "Weston Skow",
-            title: "Robotics"
-        },
-        {
-            name: "Leo Holifield",
-            title: "Robotics"
+            name: "Brittainica Hansen",
+            title: "Deutschland Dory"
         },
         {
             name: "Clara Hagen",
-            title: "Robotics"
+            title: "Apprentice"
+        },
+        {
+            name: "Debra Ritter",
+            title: "Marketing"
+        },
+        {
+            name: "Jaxon Norton",
+            title: "Apprentice"
+        },
+        {
+            name: "Leo Holifield",
+            title: "...Mia?..."
+        },
+        {
+            name: "McKenzie Rodenberg",
+            title: "Robotics?"
         },
         {
             name: "Micheal Pettengill",
-            title: "Robotics"
+            title: "Apprentice"
         },
+        {
+            name: "Mike Anderson",
+            title: "Web team/Coding"
+        },
+        {
+            name: "Royal Johnson",
+            title: "Quartermaster/Build team"
+        },
+        {
+            name: "Sami Syverson",
+            title: "Coding"
+        },
+        {
+            name: "Sydney Reed",
+            title: "Marketing"
+        },
+        {
+            name: "Teah Van Hale",
+            title: "Solderist Supreme"
+        },
+        {
+            name: "Timothy Ryan",
+            title: "Coupon King"
+        },
+        {
+            name: "Titus Hamilton",
+            title: "Strategist"
+        },
+        {
+            name: "Weston Skow",
+            title: "Apprentice"
+        }
     ];
 
     const members = document.getElementById("members");
