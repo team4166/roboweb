@@ -56,7 +56,7 @@ function makeList() {
         },
         {
             name: "Leo Holifield",
-            title: "...Mia?..."
+            title: "...MIA?..."
         },
         {
             name: "McKenzie Rodenberg",
