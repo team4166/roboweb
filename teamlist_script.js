@@ -1,6 +1,10 @@
 function createMemberElement(person) {
     const memberSection = document.createElement("div");
     memberSection.classList.add("member");
+    // Add captain class if title includes "captain" (case insensitive)
+    if (person.title.toLowerCase().includes("captain")) {
+        memberSection.classList.add("captain");
+    }
     
     const memberName = document.createElement("h2");
     memberName.classList.add("name");
@@ -26,10 +30,8 @@ function makeList() {
         { name: "Chris Stassen", title: "Alumni Captain Mentor" }
     ];
     
-    // First, separate the captain from other members
-    const captain = { name: "Olof Bakke", title: "Fabrication/ Team captain 24&25" };
-    
-    const otherMembers = [
+    const allMembers = [
+        { name: "Olof Bakke", title: "Fabrication/ Team captain 24&25" },
         { name: "Royal Johnson", title: "Quartermaster/Build team" },
         { name: "Sami Syverson", title: "Coding" },
         { name: "Sydney Reed", title: "Marketing" },
@@ -49,11 +51,17 @@ function makeList() {
         { name: "Jaxon Norton", title: "Apprentice" }
     ];
 
-    // Sort other members alphabetically by name
-    const sortedMembers = otherMembers.sort((a, b) => a.name.localeCompare(b.name));
-    
-    // Combine captain with sorted members
-    const membersList = [captain, ...sortedMembers];
+    // Separate captains and regular members
+    const captains = allMembers.filter(member => 
+        member.title.toLowerCase().includes("captain")
+    ).sort((a, b) => a.name.localeCompare(b.name));
+
+    const regularMembers = allMembers.filter(member => 
+        !member.title.toLowerCase().includes("captain")
+    ).sort((a, b) => a.name.localeCompare(b.name));
+
+    // Combine sorted captains and regular members
+    const sortedMembers = [...captains, ...regularMembers];
 
     const membersContainer = document.getElementById("members");
     const coachesContainer = document.getElementById("coaches");
@@ -64,13 +72,13 @@ function makeList() {
         return;
     }
 
-    // Render coaches (unchanged)
+    // Render coaches
     coachesList.forEach(coach => {
         coachesContainer.appendChild(createMemberElement(coach));
     });
     
-    // Render sorted members with captain first
-    membersList.forEach(member => {
+    // Render all members (captains first, then regular members)
+    sortedMembers.forEach(member => {
         membersContainer.appendChild(createMemberElement(member));
     });
 }
