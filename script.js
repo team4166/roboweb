@@ -32,7 +32,7 @@ function makeList() {
         },
         {
             name: "Annabell Fanfulik",
-            title: "Website team"
+            title: "Coding"
         },
         {
             name: "Brayden Packer",
@@ -40,7 +40,7 @@ function makeList() {
         },
         {
             name: "Brittainica Hansen",
-            title: "Deutschland Dory"
+            title: "Apprenctice"
         },
         {
             name: "Clara Hagen",
@@ -54,13 +54,10 @@ function makeList() {
             name: "Jaxon Norton",
             title: "Apprentice"
         },
-        {
-            name: "Leo Holifield",
-            title: "...MIA?..."
-        },
+//        {  name: "Leo Holifield", title: "...MIA?..."        },
         {
             name: "McKenzie Rodenberg",
-            title: "Robotics?"
+            title: "Marketing?"
         },
         {
             name: "Micheal Pettengill",
@@ -68,7 +65,7 @@ function makeList() {
         },
         {
             name: "Mike Anderson",
-            title: "Web team/Coding"
+            title: "Coding"
         },
         {
             name: "Royal Johnson",
@@ -84,11 +81,11 @@ function makeList() {
         },
         {
             name: "Teah Van Hale",
-            title: "Solderist Supreme"
+            title: "Coding"
         },
         {
             name: "Timothy Ryan",
-            title: "Coupon King"
+            title: "Sales"
         },
         {
             name: "Titus Hamilton",
