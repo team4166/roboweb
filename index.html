@@ -81,9 +81,11 @@
             .member {
                 width: 250px;
                 background-color: white;
+                color:#555;
                 border: solid 1px black;
-                border-left: 10px solid #003DA5;
-                padding: 12px;
+                border-left: 3px solid #003DA5;
+                padding: 7px;
+                padding-left: 24px;
                 margin: 8px;
                 border-radius: 8px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -91,9 +93,22 @@
             
             #coaches .member {
                 border-left: none;
+                color:black;
                 background-image: linear-gradient(to right, #003DA5 7px, #FFCC00 20px, white 20px);
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
                 padding-left: 24px;  /* Add extra padding to clear the gradient */
+            }
+            #members .member.captain {
+                border-left: none;
+                color:black;
+                background-image: linear-gradient(to right, #003DA5 7px, #C0C0C0 20px, white 20px);
+                padding-left: 24px;
+            }
+            #members .member.regular-member {
+                border-left: none;
+                color:black;
+                background-image: linear-gradient(to right, #003DA5 7px, #CD7F32 13px, white 13px);
+                padding-left: 24px;
             }
             
             .name, .title {
@@ -167,7 +182,7 @@
             <div class="box bluebox mainheader centerStuff">
                 <h1>Robostangs</h1>
                 <p>Mora MN Robotics Team</p>
-                <a href="index.html" title="View standard layout"><img src="4166_logo_outline.png" width="200" alt="Robostangs Logo"/></a>
+                <a href="dev-index.html" title="View developing layout"><img src="4166_logo_outline.png" width="200" alt="Robostangs Logo"/></a>
             </div> 
 
             <div class="box centerStuff mission-section">
@@ -220,6 +235,6 @@
                     allowfullscreen></iframe>
             </div>
         </div>
-        <script src="script.js"></script>
+        <script src="teamlist_script.js"></script>
     </body>
 </html>
