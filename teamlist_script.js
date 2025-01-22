@@ -63,7 +63,7 @@ function makeList() {
         { name: "Clara Hagen", title: "Apprentice", tier: "apprentice" },
         { name: "Micheal Pettengill", title: "Apprentice", tier: "apprentice" },
         { name: "Jaxon Norton", title: "Apprentice", tier: "apprentice" },
-        { name: "Timothy Ryan", title: "Coupon King", tier: "apprentice" }
+        { name: "Timothy Ryan", title: "Sales", tier: "apprentice" }
     ];
 
     // Separate and sort members by tier
