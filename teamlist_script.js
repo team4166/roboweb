@@ -49,21 +49,21 @@ function makeList() {
         { name: "Sami Syverson", title: "Coding", tier: "member" },
         { name: "Sydney Reed", title: "Marketing", tier: "member" },
         { name: "Titus Hamilton", title: "Strategist", tier: "member" },
-        { name: "Annabell Fanfulik", title: "Website team", tier: "member" },
-        { name: "Brittainica Hansen", title: "Deutschland Dory", tier: "member" },
+        { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
         { name: "Debra Ritter", title: "Marketing", tier: "member" },
-        { name: "Mike Anderson", title: "Web team/Coding", tier: "member" },
-        { name: "McKenzie Rodenberg", title: "Robotics?", tier: "member" },
-        { name: "Teah Van Hale", title: "Solderist Supreme", tier: "member" },
+        { name: "Mike Anderson", title: "Coding", tier: "member" },
+        { name: "McKenzie Rodenberg", title: "Marketing", tier: "member" },
+        { name: "Teah Van Hale", title: "Programming", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
-        { name: "Timothy Ryan", title: "Coupon King", tier: "member" },
-        
+         
         // Apprentices
         { name: "Weston Skow", title: "Apprentice", tier: "apprentice" },
-        { name: "Leo Holifield", title: "...Mia?...", tier: "apprentice" },
+        { name: "Brittainica Hansen", title: "Apprentice", tier: "apprentice" },
+      //  { name: "Leo Holifield", title: "...Mia?...", tier: "apprentice" },
         { name: "Clara Hagen", title: "Apprentice", tier: "apprentice" },
         { name: "Micheal Pettengill", title: "Apprentice", tier: "apprentice" },
-        { name: "Jaxon Norton", title: "Apprentice", tier: "apprentice" }
+        { name: "Jaxon Norton", title: "Apprentice", tier: "apprentice" },
+        { name: "Timothy Ryan", title: "Coupon King", tier: "apprentice" }
     ];
 
     // Separate and sort members by tier
