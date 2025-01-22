@@ -53,7 +53,7 @@ function makeList() {
         { name: "Debra Ritter", title: "Marketing", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "McKenzie Rodenberg", title: "Marketing", tier: "member" },
-        { name: "Teah Van Hale", title: "Programming", tier: "member" },
+        { name: "Teah Van Hale", title: "Coding", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
