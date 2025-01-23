@@ -54,6 +54,7 @@ function makeList() {
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "McKenzie Rodenberg", title: "Marketing", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
+        { name: "Liam Connolly", title: "Fabrication", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
