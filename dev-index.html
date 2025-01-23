@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
         <title>#4166 Robostangs</title>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"></script>
         <style>
+    
             .box {
                 border: solid 1px black;
             }
@@ -51,7 +50,7 @@
             /* Button styling */
             .action-button {
                 background: linear-gradient(to bottom right, #003DA5, #0066ff);
-                color: white !important;
+                color: white !important; /* Override the regular link color */
                 padding: 8px 16px;
                 text-align: center;
                 text-decoration: none;
@@ -66,83 +65,56 @@
                 transform: scale(1.05);
                 color: white !important;
             }
-
-            .social-feed {
-                display: flex;
-                justify-content: center;
-                margin: 1rem 0;
-            }
         </style>
     </head>
 
     <body>
-        <div id="fb-root"></div>
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"></script>
         <div class="box bluebox mainheader centerStuff">
             <h1>Robostangs</h1>
             <p>Mora MN Robotics Team</p>
-            <a href="index.html" title="View Live layout"><img src="4166_logo_outline.png" width="200" alt="Robostangs Logo"/></a>
+            <a href="index.html" title="View Live layout"><img src="4166_logo_outline.png" width="200"/></a>
         </div> 
         <div class="box centerStuff">
-            <h4>What we're about</h4>
-            <p>
+            <h4> What we're about</h4>
+            
+           <p>
                Mission: Our mission is to inspire young people to be science and technology leaders, by engaging them in exciting mentor-based programs that build science, engineering and technology skills, that inspire innovation, and that foster well-rounded life capabilities including self-confidence, communication, and leadership.
-            </p>
+           </p>
         </div>
         
-        <div class="box bluebox centerStuff">The team</div>
-            <p>Coaches</p>
-            <div id="coaches" class="members"></div>
+        
+        <div class="box bluebox centerStuff">The team </div>
+             <p>Coaches</p>
+             <div id="coaches" class="members"></div>
             <p>Team Members</p>
             <div id="members" class="members"></div>
              
         <div class="box bluebox centerStuff">Socials</div>
-        <div class="social-feed centerStuff">
-            <div class="fb-page" 
-                data-href="https://www.facebook.com/Robostangs4166" 
-                data-tabs="timeline" 
-                data-width="500" 
-                data-height="500" 
-                data-small-header="true" 
-                data-adapt-container-width="true" 
-                data-hide-cover="false" 
-                data-show-facepile="true">
-                <blockquote cite="https://www.facebook.com/Robostangs4166" class="fb-xfbml-parse-ignore">
-                    <a href="https://www.facebook.com/Robostangs4166">Robostangs on facebook</a>
-                </blockquote>
-            </div>
-        </div>
         <ul>
+            <li>Facebook</li>
+
             <li>Twitter(X)</li>
+
             <li>Instagram</li>
-            <li><a href="https://robostangs4166.github.io/button-maker/" class="action-button">Button maker tool</a></li>
+            <li><a href="https://robostangs4166.github.io/button-maker/" class="action-button"> Button maker tool </a></li>
         </ul>
+<div class="box bluebox centerStuff">
+    <h2>FIRST Robotics 2025 Game: Reefscape</h2>
+</div>
+<div class="box">
+    <p>
+        In 2025, we're excited to compete in FIRST Robotics' latest challenge called "Reefscape". 
+        In this competition, teams design and build robots to help protect coral reef environments. 
+        Our robots will work to remove harmful algae and strategically place new coral to restore 
+        reef habitats. Each match presents a unique challenge where teams must demonstrate both 
+        precise control and efficient automation.
+    </p>
+    <p>
+        Watch the video below to learn more about this year's exciting competition!
+    </p>
+</div>
 
-        <div class="box bluebox centerStuff">
-            <h2>FIRST Robotics 2025 Game: Reefscape</h2>
-        </div>
-        <div class="box">
-            <p>
-                In 2025, we're excited to compete in FIRST Robotics' latest challenge called "Reefscape". 
-                In this competition, teams design and build robots to help protect coral reef environments. 
-                Our robots will work to remove harmful algae and strategically place new coral to restore 
-                reef habitats. Each match presents a unique challenge where teams must demonstrate both 
-                precise control and efficient automation.
-            </p>
-            <p>
-                Watch the video below to learn more about this year's exciting competition!
-            </p>
-        </div>
-
-        <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/YWbxcjlY9JY?si=5JmhsbmwmPp-7ih-" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-        </iframe>            
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YWbxcjlY9JY?si=5JmhsbmwmPp-7ih-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>            
         <script src="script.js"></script>
     </body>
 </html>
