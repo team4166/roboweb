@@ -22,7 +22,7 @@ function makeList() {
         },
         {
             name: "Chris Stassen",
-            title: "Alumni Captain Mentor"
+            title: "Alumni Captain "22-24" Mentor"
         }
     ];
     const membersList = [
