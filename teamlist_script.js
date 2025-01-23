@@ -42,7 +42,7 @@ function makeList() {
         { name: "Chris Stassen", title: "Alumni Captain '22-24' Mentor", tier: "coach" },
         
         // Captain
-        { name: "Olof Bakke", title: "Fabrication/Team Captain '24 & '25", tier: "captain" },
+        { name: "Olof Bakke", title: "Fabrication/Team Captain '24-'25", tier: "captain" },
         
         // Regular Members
         { name: "Royal Johnson", title: "Quartermaster/Build team", tier: "member" },
