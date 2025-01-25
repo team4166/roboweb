@@ -2,197 +2,8 @@
 <html lang="en">
     <head>
         <title>#4166 Robostangs</title>
-        <style>
-            body {
-                background-image: url('circuit_bg_full.jpg');
-                background-size: cover;
-                background-attachment: fixed;
-                background-position: center;
-                margin: 0;
-                color: #333;
-            }
-
-            .content-wrapper {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0.5rem;
-            }
-
-            .box {
-                background-color: rgba(255, 255, 255, 0.95);
-                border: solid 1px black;
-                margin: 0.5rem 0;
-                padding: 0.75rem;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            .bluebox {
-                background-color: rgba(0, 61, 165, 0.70);
-                color: white;
-                padding: 0.5rem;
-            }
-
-            .centerStuff {
-                text-align: center;
-            }
-
-            .mainheader {
-                padding: .75rem 1rem;
-                margin-top: 0;
-                border-radius: 0 0 8px 8px;
-            }
-
-            .mainheader h1 {
-                margin: 0.5rem 0;
-            }
-
-            .mainheader p {
-                margin: 0.5rem 0;
-            }
-
-            .mission-section h4 {
-                margin: 0.25rem 0;
-            }
-
-            .mission-section p {
-                margin: 0.5rem 0;
-            }
-
-            .members {
-                border: solid 1px black;
-                background-color: rgba(255, 255, 255, 0.95);
-                padding: 0.5rem;
-                border-radius: 8px;
-                margin-top: 0.25rem;
-            }
-
-            .members-grid {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .full-width {
-                width: 100%;
-                margin: 0.25rem 0 0.75rem 0;
-            }
-
-            .member {
-                width: 250px;
-                background-color: white;
-                color:#555;
-                border: solid 1px black;
-                border-left: 3px solid #003DA5;
-                padding: 7px;
-                padding-left: 24px;
-                margin: 8px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            }
-            
-            #coaches .member {
-                border-left: none;
-                color:black;
-                background-image: linear-gradient(to right, #003DA5 7px, #FFCC00 20px, white 20px);
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-                padding-left: 24px;  /* Add extra padding to clear the gradient */
-            }
-            #members .member.captain {
-                border-left: none;
-                color:black;
-                background-image: linear-gradient(to right, #003DA5 7px, #C0C0C0 20px, white 20px);
-                padding-left: 24px;
-            }
-            #members .member.regular-member {
-                border-left: none;
-                color:black;
-                background-image: linear-gradient(to right, #003DA5 7px, #CD7F32 13px, white 13px);
-                padding-left: 24px;
-            }
-            
-            .name, .title {
-                margin: 0;
-                padding: 0;
-            }
-
-            a:link, a:visited {
-                color: #003DA5;
-                text-decoration: underline;
-            }
-
-            a:hover {
-                color: #0055e5;
-            }
-
-            .action-button {
-                background: linear-gradient(to bottom right, #003DA5, #0066ff);
-                color: white !important;
-                padding: 8px 16px;
-                text-align: center;
-                text-decoration: none;
-                font-size: large;
-                display: inline-block;
-                border-radius: 10px;
-                transition: all 0.3s ease;
-                margin: 0.5rem;
-            }
-
-            .action-button:hover {
-                background: linear-gradient(to top left, #003DA5, #0066ff);
-                transform: scale(1.05);
-                color: white !important;
-            }
-
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0.5rem 0;
-            }
-
-            ul li {
-                margin: 0.5rem 0;
-            }
-
-            .section-label {
-                margin: 0.25rem 0;
-                font-weight: bold;
-            }
-
-            .game-description {
-                margin: 0.5rem 0;
-            }
-
-            .game-description p {
-                margin: 0.5rem 0;
-            }
-
-            iframe {
-                max-width: 100%;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            h3 {
-                color: 003DA5;
-            }
-
-            .sponsor-card {
-                width: 300px;
-                padding: 1rem;
-                background-color: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                margin: 1rem;
-            }
-
-            .sponsor-intro {
-                max-width: 800px;
-                margin: 0 auto 2rem auto;
-                line-height: 1.6;
-            }
-        </style>
+        <link rel="stylesheet" href="teamsite.css">
     </head>
-
     <body>
         <div class="content-wrapper">
             <div class="box bluebox mainheader centerStuff">
@@ -217,16 +28,6 @@
                 <h3 class="section-label full-width centerStuff">Team Members</h3>
                 <div id="members" class="members-grid"></div>
             </div>
-
-            <div class="box bluebox centerStuff">
-            <h2 style="margin: 0;"> Socials </h2>
-            </div>
-            <div class="box centerStuff">
-                <a href="https://www.facebook.com/Robostangs4166" class="action-button">Facebook</a>
-                <a href="https://www.instagram.com/morarobostangs/" class="action-button">Instagram</a>
-                <a href="https://robostangs4166.github.io/button-maker/" class="action-button">Button maker tool</a>
-                <a href="https://morarobotics2025.itemorder.com/shop/home/" class="action-button"> Shirt store</a>
-            </div>  
 
             <div class="box bluebox centerStuff">
                 <h2 style="margin: 0;">FIRST Robotics 2025 Game: Reefscape</h2>
@@ -307,6 +108,27 @@
                     Mora, MN 55051<br>
                     <em>(Please write "Robotics Team" on the memo line)</em>
                     </p>
+                </div>
+            </div>
+
+            <!-- Social footer -->
+            <div class="box bluebox centerStuff">
+                <h2 style="margin: 0;">Follow Us</h2>
+            </div>
+            <div class="box social-footer">
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/Robostangs4166" class="social-link">
+                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#003DA5">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Facebook
+                    </a>
+                    <a href="https://www.instagram.com/morarobostangs/" class="social-link">
+                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#003DA5">
+                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03z"/>
+                        </svg>
+                        Instagram
+                    </a>
                 </div>
             </div>
         </div>
