@@ -191,22 +191,20 @@ h3 {
 /* Social footer */
 .social-footer {
     margin-top: 2rem;
-    padding: 1rem;
-    text-align: center;
 }
 
 .social-icons {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 2rem;
-    padding: 1rem;
+    gap: 1.5rem;
+    padding: 0.5rem;
 }
 
 .social-icons a {
     display: flex;
     padding: 0.5rem;
     border-radius: 50%;
-    background: white;
     transition: transform 0.2s;
 }
 
