@@ -60,7 +60,7 @@ function makeList() {
             title: "Marketing?"
         },
         {
-            name: "Micheal Pettengill",
+            name: "Michael Pettengill",
             title: "Apprentice"
         },
         {
