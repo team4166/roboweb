@@ -1,0 +1,222 @@
+/* Base styles */
+body {
+    background-image: url('circuit_bg_full.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    color: #333;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem;
+}
+
+/* Box styles */
+.box {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: solid 1px black;
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bluebox {
+    background-color: rgba(0, 61, 165, 0.70);
+    color: white;
+    padding: 0.5rem;
+}
+
+/* Header styles */
+.mainheader {
+    padding: .75rem 1rem;
+    margin-top: 0;
+    border-radius: 0 0 8px 8px;
+}
+
+.mainheader h1 {
+    margin: 0.5rem 0;
+}
+
+.mainheader p {
+    margin: 0.5rem 0;
+}
+
+/* Mission section */
+.mission-section h4 {
+    margin: 0.25rem 0;
+}
+
+.mission-section p {
+    margin: 0.5rem 0;
+}
+
+/* Team members section */
+.members {
+    border: solid 1px black;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+}
+
+.members-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.member {
+    width: 250px;
+    background-color: white;
+    color: #555;
+    border: solid 1px black;
+    border-left: 3px solid #003DA5;
+    padding: 7px;
+    padding-left: 24px;
+    margin: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#coaches .member {
+    border-left: none;
+    color: black;
+    background-image: linear-gradient(to right, #003DA5 7px, #FFCC00 20px, white 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding-left: 24px;
+}
+
+#members .member.captain {
+    border-left: none;
+    color: black;
+    background-image: linear-gradient(to right, #003DA5 7px, #C0C0C0 20px, white 20px);
+    padding-left: 24px;
+}
+
+#members .member.regular-member {
+    border-left: none;
+    color: black;
+    background-image: linear-gradient(to right, #003DA5 7px, #CD7F32 13px, white 13px);
+    padding-left: 24px;
+}
+
+.name, .title {
+    margin: 0;
+    padding: 0;
+}
+
+/* Utility classes */
+.centerStuff {
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+    margin: 0.25rem 0 0.75rem 0;
+}
+
+/* Links and buttons */
+a:link, a:visited {
+    color: #003DA5;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #0055e5;
+}
+
+.action-button {
+    background: linear-gradient(to bottom right, #003DA5, #0066ff);
+    color: white !important;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: large;
+    display: inline-block;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+}
+
+.action-button:hover {
+    background: linear-gradient(to top left, #003DA5, #0066ff);
+    transform: scale(1.05);
+    color: white !important;
+}
+
+/* Game section */
+.section-label {
+    margin: 0.25rem 0;
+    font-weight: bold;
+}
+
+.game-description {
+    margin: 0.5rem 0;
+}
+
+.game-description p {
+    margin: 0.5rem 0;
+}
+
+iframe {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sponsors section */
+h3 {
+    color: #003DA5;
+}
+
+.sponsor-card {
+    width: 300px;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+}
+
+.sponsor-intro {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+/* Social footer */
+.social-footer {
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #003DA5;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.social-link:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+}
