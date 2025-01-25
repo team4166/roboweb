@@ -22,7 +22,7 @@ function makeList() {
         },
         {
             name: "Chris Stassen",
-            title: "Alumni Captain " "22-24" Mentor"
+            title: "Mentoring FRC Veteran, 22-24 Member / Captain"
         }
     ];
     const membersList = [
@@ -54,7 +54,7 @@ function makeList() {
             name: "Jaxon Norton",
             title: "Apprentice"
         },
-//        {  name: "Leo Holifield", title: "...MIA?..."        },
+
         {
             name: "McKenzie Rodenberg",
             title: "Marketing?"
