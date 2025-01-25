@@ -61,7 +61,7 @@ function makeList() {
         },
         {
             name: "Michael Pettengill",
-            title: "Apprentice"
+            title: "coding/building"
         },
         {
             name: "Mike Anderson",
@@ -93,7 +93,7 @@ function makeList() {
         },
         {
             name: "Weston Skow",
-            title: "Apprentice"
+            title: "marketing/building"
         }
     ];
 
