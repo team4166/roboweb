@@ -4,6 +4,10 @@ function makeList() {
             name: "Duke Pancake",
             title: "Lead Coach"
         },
+         {
+            name: "Bill Kluge",
+            title: "Lead Coach 2"
+        },
         {
             name: "Amy Schifsky",
             title: "Business Coach"
