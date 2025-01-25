@@ -50,7 +50,7 @@ function makeList() {
         { name: "Sydney Reed", title: "Marketing", tier: "member" },
         { name: "Titus Hamilton", title: "Strategist", tier: "member" },
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
-        { name: "Debra Ritter", title: "Marketing", tier: "member" },
+        { name: "Debra Ritter", title: "Marketing/Safety", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "McKenzie Rodenberg", title: "Marketing", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
@@ -59,7 +59,7 @@ function makeList() {
          
         // Apprentices
         { name: "Weston Skow", title: "Apprentice", tier: "apprentice" },
-        { name: "Brittainica Hansen", title: "Apprentice", tier: "apprentice" },
+        { name: "Brittainica Hansen", title: "Safety! Apprentice", tier: "apprentice" },
       //  { name: "Leo Holifield", title: "...Mia?...", tier: "apprentice" },
         { name: "Clara Hagen", title: "Apprentice", tier: "apprentice" },
         { name: "Michael Pettengill", title: "Apprentice", tier: "apprentice" },
