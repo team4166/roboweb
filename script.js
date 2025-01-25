@@ -52,7 +52,7 @@ function makeList() {
         },
         {
             name: "Jaxon Norton",
-            title: "Apprentice"
+            title: "marketing"
         },
 
         {
