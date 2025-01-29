@@ -58,12 +58,12 @@ function makeList() {
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
-        { name: "Weston Skow", title: "Apprentice", tier: "apprentice" },
+        { name: "Weston Skow", title: "Building Apprentice", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Safety! Apprentice", tier: "apprentice" },
       //  { name: "Leo Holifield", title: "...Mia?...", tier: "apprentice" },
-        { name: "Clara Hagen", title: "Apprentice", tier: "apprentice" },
-        { name: "Michael Pettengill", title: "Apprentice", tier: "apprentice" },
-        { name: "Jaxon Norton", title: "Apprentice", tier: "apprentice" },
+        { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
+        { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" },
+        { name: "Jaxon Norton", title: "Marketing Apprentice", tier: "apprentice" },
         { name: "Timothy Ryan", title: "Sales", tier: "apprentice" }
     ];
 
