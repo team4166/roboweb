@@ -52,13 +52,13 @@ function makeList() {
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
         { name: "Debra Ritter", title: "Marketing/Safety", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
-        { name: "McKenzie Rodenberg", title: "Marketing", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
         { name: "Liam Connolly", title: "Fabrication", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
         { name: "Weston Skow", title: "Building Apprentice", tier: "apprentice" },
+        { name: "McKenzie Rodenberg", title: "Marketing", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Safety! Apprentice", tier: "apprentice" },
         { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
         { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" },
