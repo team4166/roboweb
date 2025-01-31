@@ -35,7 +35,6 @@ function makeList() {
         // Coaches
         { name: "Duke Pancake", title: "Lead Coach", tier: "coach" },
         { name: "Amy Schifsky", title: "Business Coach", tier: "coach" },
-        { name: "Zachery Peterson", title: "WebDev Coach", tier: "coach" },
         { name: "Bill Kluge", title: "Lead Coach 2", tier: "coach" },
         { name: "Elizabeth Denzine", title: "Mentor", tier: "coach" },
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
@@ -58,11 +57,9 @@ function makeList() {
          
         // Apprentices
         { name: "Weston Skow", title: "Building Apprentice", tier: "apprentice" },
-        { name: "McKenzie Rodenberg", title: "Marketing", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Safety! Apprentice", tier: "apprentice" },
         { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
-        { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" },
-        { name: "Jaxon Norton", title: "Marketing Apprentice", tier: "apprentice" }
+        { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" }
         ];
 
     // Separate and sort members by tier
