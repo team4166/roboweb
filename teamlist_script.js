@@ -60,6 +60,7 @@ function makeList() {
         
         { name: "Brittainica Hansen", title: "Safety", tier: "member" },
         { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
+        { name: "Haillie Saxon", title: "Marketing Contributor", tier: "apprentice" },
         { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" }
         ];
 
