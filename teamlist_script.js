@@ -38,17 +38,14 @@ function makeList() {
         { name: "Bill Kluge", title: "Lead Coach 2", tier: "coach" },
         { name: "Elizabeth Denzine", title: "Mentor", tier: "coach" },
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
-        { name: "Chris Stassen", title: "Alumni Captain '22-24' Mentor", tier: "coach" },
         
         // Captain
-        { name: "Olof Bakke", title: "Fabrication/Team Captain '24-'25", tier: "captain" },
-         { name: "Titus Hamilton", title: "Co-Captain", tier: "captain" },
+        { name: "Olof Bakke", title: "Fabrication/Team Captain '24-'25", tier: "member" },
+      
         
         // Regular Members
         { name: "Royal Johnson", title: "Quartermaster/Build team", tier: "member" },
-        { name: "Sami Syverson", title: "Coding", tier: "member" },
-        { name: "Sydney Reed", title: "Marketing", tier: "member" },
-       
+           
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
         { name: "Debra Ritter", title: "Marketing/Safety", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
