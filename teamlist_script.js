@@ -44,10 +44,10 @@ function makeList() {
       
         
         // Regular Members
-        { name: "Royal Johnson", title: "Quartermaster/Build team", tier: "member" },
+        { name: "Royal Johnson", title: "Fabrication/Design", tier: "member" },
            
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
-        { name: "Debra Ritter", title: "Marketing/Safety", tier: "member" },
+        { name: "Debra Ritter", title: "Marketing/Fabrication", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
         { name: "Liam Connolly", title: "Fabrication", tier: "member" },
