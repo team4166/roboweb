@@ -48,7 +48,7 @@ function makeList() {
            
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
         { name: "Debra Ritter", title: "Marketing/Fabrication", tier: "member" },
-        { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "apprentice" },
+        { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
         { name: "Liam Connolly", title: "Fabrication", tier: "member" },
