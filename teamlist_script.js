@@ -47,7 +47,7 @@ function makeList() {
         { name: "Royal Johnson", title: "Fabrication/Design", tier: "member" },
            
         { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
-        { name: "Debra Ritter", title: "Marketing/Fabrication", tier: "member" },
+        { name: "Bee Ritter", title: "Marketing/Fabrication", tier: "member" },
         { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
