@@ -57,7 +57,8 @@ function makeList() {
          
         // Apprentices
         
-        { name: "Annabell Fanfulik", title: "Coding", tier: "member" },
+        { name: "Weston Skow", title: "Fabrication", tier: "apprentice" },
+        { name: "Annabell Fanfulik", title: "Coding", tier: "apprentice" },
         { name: "Timmy Ryan", title: "Fabrication", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Safety", tier: "apprentice" },
         { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
