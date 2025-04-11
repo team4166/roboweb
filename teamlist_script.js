@@ -44,9 +44,7 @@ function makeList() {
       
         
         // Regular Members
-        { name: "Royal Johnson", title: "Fabrication/Design", tier: "member" },
-           
-        
+        { name: "Royal Johnson", title: "Fabrication/Design", tier: "member" },       
         { name: "Bee Ritter", title: "Marketing/Fabrication", tier: "member" },
         { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
