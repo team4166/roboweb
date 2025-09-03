@@ -40,17 +40,15 @@ function makeList() {
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
         
         // Captain
-        { name: "Olof Bakke", title: "Fabrication/Team Captain '24-'25", tier: "member" },
+        
       
         
         // Regular Members
-        { name: "Royal Johnson", title: "Fabrication/Design", tier: "member" },       
+          
         { name: "Bee Ritter", title: "Marketing/Fabrication", tier: "member" },
         { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "member" },
         { name: "Mike Anderson", title: "Coding", tier: "member" },
         { name: "Teah Van Hale", title: "Coding", tier: "member" },
-        { name: "Liam Connolly", title: "Fabrication", tier: "member" },
-        { name: "Weston Skow", title: "Fabrication", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
@@ -60,7 +58,6 @@ function makeList() {
         { name: "Timmy Ryan", title: "Fabrication", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Safety", tier: "apprentice" },
         { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
-
         { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" }
         ];
 
