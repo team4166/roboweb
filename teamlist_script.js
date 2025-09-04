@@ -40,7 +40,7 @@ function makeList() {
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
         
         // Captain
-        
+        //we might have more people
       
         
         // Regular Members
@@ -52,6 +52,7 @@ function makeList() {
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
          
         // Apprentices
+        //make sure that if they are aprenticecs in 8th grade that in 9th grade they will be a member
         
         { name: "Weston Skow", title: "Fabrication", tier: "apprentice" },
         { name: "Annabell Fanfulik", title: "Coding", tier: "apprentice" },
