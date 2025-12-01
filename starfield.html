@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hyperspace Screensaver</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000; /* Deep black for OLED/Night mode */
+            cursor: none; /* Hides the mouse cursor */
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // --- SETTINGS YOU CAN CHANGE ---
+        const starCount = 800;   // Number of stars (Lower this if it lags on Pico)
+        const speed = 0.2;         // How fast you fly (1 is slow, 5 is fast)
+        const starColor = '255, 255, 255'; // RGB color (White)
+        // -------------------------------
+
+        let stars = [];
+        let width, height, centerX, centerY;
+
+        // Resize the canvas to fill the screen
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+
+        // The Star Object
+        class Star {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                // Random position in 3D space
+                this.x = (Math.random() - 0.5) * width * 2;
+                this.y = (Math.random() - 0.5) * height * 2;
+                this.z = Math.random() * width; // Depth
+                this.pz = this.z; // Previous z (for making trails)
+            }
+
+            update() {
+                // Move the star closer (decrease Z)
+                this.z = this.z - speed * 10; // Speed multiplier
+
+                // If star passes the screen (z <= 0), reset it to the back
+                if (this.z <= 1) {
+                    this.init();
+                    this.z = width;
+                    this.pz = this.z;
+                }
+            }
+
+            draw() {
+                // Perspective projection math
+                let x = (this.x / this.z) * centerX + centerX;
+                let y = (this.y / this.z) * centerY + centerY;
+
+                // Calculate size based on proximity
+                let r = (1 - this.z / width) * 3; // Max radius
+
+                // Draw the star (Simple circle)
+                // Using fillRect is faster than arc() for weak CPUs
+                ctx.fillStyle = `rgb(${starColor})`;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Optional: Draw a "trail" behind the star for a warp speed look
+                // This adds a bit of processing load. If it lags, remove this block.
+                let px = (this.x / this.pz) * centerX + centerX;
+                let py = (this.y / this.pz) * centerY + centerY;
+                
+                ctx.strokeStyle = `rgb(${starColor})`;
+                ctx.lineWidth = r;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+
+                this.pz = this.z; // Store current Z for next frame
+            }
+        }
+
+        // Initialize
+        resize();
+        window.addEventListener('resize', resize);
+
+        for (let i = 0; i < starCount; i++) {
+            stars.push(new Star());
+        }
+
+        // Animation Loop
+        function animate() {
+            // Clear screen with slight opacity for a "trail" effect (optional)
+            // Or use clearRect for crisp stars. 
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height); 
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
