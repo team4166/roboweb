@@ -19,61 +19,24 @@ jobs:
       env:
         API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
       run: |
-        echo "Fetching weather data for Mora, MN..."
+        echo "Starting weather fetch for Mora, MN"
+        curl -s "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=$API_KEY&units=imperial" > weather_raw.json
         
-        if [ -z "$API_KEY" ]; then
-          echo "ERROR: API key not found"
-          exit 1
-        fi
-        
-        # Fetch weather data with error handling
-        HTTP_CODE=$(curl -s -o weather_response.json -w "%{http_code}" \
-          "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=$API_KEY&units=imperial")
-        
-        echo "HTTP Status Code: $HTTP_CODE"
-        
-        if [ "$HTTP_CODE" = "200" ]; then
-          echo "Weather data fetched successfully"
-          WEATHER_DATA=$(cat weather_response.json)
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          # Create response JSON
-          cat > weather-data.json << EOF
-{
-  "success": true,
-  "data": $WEATHER_DATA,
-  "cached": false,
-  "timestamp": "$TIMESTAMP",
-  "source": "GitHub Actions"
-}
-EOF
+        if [ -s weather_raw.json ]; then
+          echo "Weather data received"
+          echo '{"success":true,"data":' > weather-data.json
+          cat weather_raw.json >> weather-data.json
+          echo ',"cached":false,"timestamp":"'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'","source":"GitHub Actions"}' >> weather-data.json
         else
-          echo "Weather API failed with status $HTTP_CODE"
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          cat > weather-data.json << EOF
-{
-  "success": false,
-  "error": "API returned status $HTTP_CODE",
-  "timestamp": "$TIMESTAMP"
-}
-EOF
+          echo "Weather fetch failed"
+          echo '{"success":false,"error":"API call failed","timestamp":"'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"}' > weather-data.json
         fi
         
-        # Clean up temp file
-        rm -f weather_response.json
+        rm -f weather_raw.json
 
-    - name: Commit weather data
+    - name: Commit changes
       run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions Bot"
-        
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
         git add weather-data.json
-        
-        if ! git diff --staged --quiet; then
-          git commit -m "Update weather data $(date)"
-          git push
-          echo "Weather data updated successfully"
-        else
-          echo "No changes to commit"
-        fi
+        git diff --staged --quiet || (git commit -m "Update weather $(date)" && git push)
