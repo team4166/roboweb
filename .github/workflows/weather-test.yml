@@ -1,0 +1,34 @@
+name: Weather Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Test weather API
+      env:
+        API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+      run: |
+        echo "Testing API connection..."
+        curl -v "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=$API_KEY&units=imperial" || echo "API call failed"
+        
+    - name: Create test file
+      run: |
+        echo "Test file created at $(date)" > test-weather.txt
+        
+    - name: Commit test file
+      run: |
+        git config user.email "test@github.com"
+        git config user.name "Test Bot"
+        git add test-weather.txt
+        git commit -m "Test weather workflow" || echo "Nothing to commit"
+        git push || echo "Push failed"
