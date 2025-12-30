@@ -166,17 +166,18 @@
             padding: 20px;
             text-align: center;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
+        }
+
+        .weather-footer {
+            background: var(--mps-white);
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 61, 165, 0.08);
         }
 
         .weather-logo-img {
             max-width: 200px;
             height: auto;
-            position: relative;
-            z-index: 2;
         }
 
         .weather-header::before {
@@ -440,11 +441,13 @@
         <div class="widget weather-widget" id="weatherWidget">
             <div class="weather-header">
                 <div class="status-indicator" id="statusIndicator">CONNECTING</div>
-                <img src="./MPS_Logo_LockUpHorseTag.png" alt="MPS Logo" class="weather-logo-img">
                 <h2 class="weather-title">Weather</h2>
             </div>
             <div class="weather-content" id="weatherContent">
                 <div class="loading">Connecting to weather service...</div>
+            </div>
+            <div class="weather-footer">
+                <img src="./MPS_Logo_LockUpHorseTag.png" alt="MPS Logo" class="weather-logo-img">
             </div>
         </div>
     </div>
