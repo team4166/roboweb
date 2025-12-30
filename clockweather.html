@@ -53,7 +53,7 @@
         }
 
         .widget.swapping {
-            transform: rotateY(180deg) translateX(550px);
+            transform: rotateY(180deg) translateX(700px);
             opacity: 0;
         }
 
@@ -70,18 +70,17 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 500px;
-            width: 500px;
-            height: 500px;
+            min-height: 600px;
+            width: 700px;
+            height: 600px;
             overflow: hidden;
-            aspect-ratio: 1;
             justify-self: center;
             align-self: center;
         }
 
         .time-header {
             background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            padding: 20px;
+            padding: 30px;
             width: 100%;
             height: 40%;
             display: flex;
@@ -93,12 +92,12 @@
         }
 
         .mps-logo-img {
-            max-width: 200px;
+            max-width: 300px;
             height: auto;
         }
 
         .time-content {
-            padding: 30px 20px;
+            padding: 40px 30px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -108,32 +107,32 @@
         }
 
         .time-display {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 800;
             color: var(--mps-blue);
-            margin: 15px 0;
+            margin: 20px 0;
             font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             line-height: 1;
         }
 
         .date-display {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: var(--mps-gray);
             font-weight: 500;
-            margin-top: 15px;
+            margin-top: 20px;
             text-align: center;
             line-height: 1.2;
         }
 
         .widget-title {
             font-family: 'Zilla Slab', serif;
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             color: var(--mps-blue);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             opacity: 0.7;
         }
 
@@ -152,7 +151,7 @@
 
         .weather-header {
             background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             position: relative;
         }
@@ -184,7 +183,7 @@
         }
 
         .weather-content {
-            padding: 30px;
+            padding: 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -333,13 +332,34 @@
             }
             
             .time-widget {
-                width: 400px;
-                height: 400px;
-                min-height: 400px;
+                width: 500px;
+                height: 450px;
+                min-height: 450px;
             }
             
             .time-display {
-                font-size: 2.5rem;
+                font-size: 3rem;
+                letter-spacing: 2px;
+            }
+            
+            .date-display {
+                font-size: 1.1rem;
+            }
+            
+            .mps-logo-img {
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .time-widget {
+                width: 400px;
+                height: 350px;
+                min-height: 350px;
+            }
+            
+            .time-display {
+                font-size: 2.2rem;
                 letter-spacing: 1px;
             }
             
@@ -350,29 +370,13 @@
             .mps-logo-img {
                 max-width: 150px;
             }
-        }
-
-        @media (max-width: 600px) {
-            .time-widget {
-                width: 350px;
-                height: 350px;
-                min-height: 350px;
-            }
-            
-            .time-display {
-                font-size: 2rem;
-            }
-            
-            .date-display {
-                font-size: 0.9rem;
-            }
-            
-            .mps-logo-img {
-                max-width: 120px;
-            }
             
             .time-content {
-                padding: 20px 15px;
+                padding: 25px 20px;
+            }
+            
+            .weather-content {
+                padding: 15px;
             }
         }
 
