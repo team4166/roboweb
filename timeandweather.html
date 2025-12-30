@@ -339,8 +339,19 @@
             }
         }
 
+        @keyframes ripple {
+            0% {
+                --wave-offset: 0;
+            }
+            100% {
+                --wave-offset: 100;
+            }
+        }
+
         .widget {
-            animation: float 15s ease-in-out infinite, breathe 45s ease-in-out infinite;
+            animation: float 15s ease-in-out infinite, breathe 45s ease-in-out infinite, ripple 4s linear infinite;
+            filter: url(#wavyEdge);
+            --wave-offset: 0;
         }
 
         /* Responsive for smaller screens */
@@ -359,6 +370,15 @@
     </style>
 </head>
 <body>
+    <svg style="display: none;">
+        <defs>
+            <filter id="wavyEdge">
+                <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" seed="0" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
     <div class="container">
         <div class="widget time-widget" id="timeWidget">
             <div class="time-header">
@@ -403,6 +423,16 @@
         };
 
         let isSwapped = false;
+
+        // Animate wavy edge ripple
+        function animateWavyEdge() {
+            const filter = document.querySelector('#wavyEdge feTurbulence');
+            let seed = 0;
+            setInterval(() => {
+                seed = (seed + 1) % 1000;
+                filter.setAttribute('seed', seed);
+            }, 50); // Update every 50ms for smooth ripple
+        }
 
         // Update time display
         function updateTime() {
@@ -563,6 +593,9 @@
             
             // Swap widgets every 30 seconds
             setInterval(swapWidgets, CONFIG.SWAP_INTERVAL);
+
+            // Start wavy edge animation
+            animateWavyEdge();
         }
 
         document.addEventListener('DOMContentLoaded', init);
