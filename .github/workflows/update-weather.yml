@@ -39,25 +39,25 @@ jobs:
           
           # Create response JSON
           cat > weather-data.json << EOF
-        {
-          "success": true,
-          "data": $WEATHER_DATA,
-          "cached": false,
-          "timestamp": "$TIMESTAMP",
-          "source": "GitHub Actions"
-        }
-        EOF
+{
+  "success": true,
+  "data": $WEATHER_DATA,
+  "cached": false,
+  "timestamp": "$TIMESTAMP",
+  "source": "GitHub Actions"
+}
+EOF
         else
           echo "Weather API failed with status $HTTP_CODE"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           
           cat > weather-data.json << EOF
-        {
-          "success": false,
-          "error": "API returned status $HTTP_CODE",
-          "timestamp": "$TIMESTAMP"
-        }
-        EOF
+{
+  "success": false,
+  "error": "API returned status $HTTP_CODE",
+  "timestamp": "$TIMESTAMP"
+}
+EOF
         fi
         
         # Clean up temp file
