@@ -1,4 +1,4 @@
-name: Update Weather Data
+name: Weather Update
 
 on:
   schedule:
