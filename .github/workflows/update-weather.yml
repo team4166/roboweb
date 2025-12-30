@@ -1,12 +1,8 @@
-# GitHub Actions Weather Service
-# This replaces your PHP central service by running every 10 minutes
-# and updating a static JSON file that all displays can read
-
 name: Update Weather Data
 
 on:
   schedule:
-    # Run every 10 minutes (6 times per hour = 144 times per day)
+    # Run every 10 minutes
     - cron: '*/10 * * * *'
   workflow_dispatch: # Allow manual trigger
 
@@ -14,17 +10,26 @@ jobs:
   update-weather:
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: write  # Required to push changes
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       
     - name: Fetch weather data
+      env:
+        API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
       run: |
+        echo "Fetching weather data for Mora, MN..."
+        
         # Fetch weather data from OpenWeatherMap API
-        WEATHER_DATA=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=${{ secrets.OPENWEATHER_API_KEY }}&units=imperial")
+        WEATHER_DATA=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=${API_KEY}&units=imperial")
         
         # Check if request was successful
         if [ $? -eq 0 ] && echo "$WEATHER_DATA" | grep -q '"cod":200'; then
+          echo "Weather data fetched successfully"
+          
           # Create response with metadata
           cat > weather-data.json << EOF
 {
@@ -38,12 +43,19 @@ jobs:
 }
 EOF
         else
+          echo "Weather API call failed, checking for existing data..."
+          
           # Keep existing file if API fails, but update timestamp to show it's stale
           if [ -f weather-data.json ]; then
+            echo "Updating existing file with stale indicator"
+            # Install jq for JSON processing
+            sudo apt-get update && sudo apt-get install -y jq
+            
             # Update existing file with stale indicator
             jq '.cached = true | .stale = true | .error = "API call failed, using cached data" | .timestamp = "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"' weather-data.json > weather-data-temp.json
             mv weather-data-temp.json weather-data.json
           else
+            echo "No existing file, creating error response"
             # Create error response if no existing file
             cat > weather-data.json << EOF
 {
@@ -66,8 +78,7 @@ EOF
         if ! git diff --staged --quiet; then
           git commit -m "Update weather data: $(date)"
           git push
+          echo "Weather data updated and committed"
         else
           echo "No weather data changes to commit"
         fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
