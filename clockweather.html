@@ -40,11 +40,20 @@
 
         .container {
             display: grid;
-            grid-template-columns: 2fr 1fr;
             gap: 40px;
             width: 100%;
             max-width: 1400px;
             perspective: 1000px;
+        }
+
+        /* Default: time widget first (left), weather widget second (right) */
+        .container:has(.time-widget:first-child) {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        /* Swapped: weather widget first (left), time widget second (right) */
+        .container:has(.weather-widget:first-child) {
+            grid-template-columns: 1fr 2fr;
         }
 
         .widget {
