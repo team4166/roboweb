@@ -128,12 +128,12 @@
         }
 
         .date-display {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--mps-gray);
             font-weight: 500;
             margin-top: 25px;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
         .widget-title {
@@ -488,9 +488,9 @@
 
             document.getElementById('timeDisplay').textContent = `${hours}:${minutes} ${ampm}`;
 
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateStr = now.toLocaleDateString('en-US', options);
-            document.getElementById('dateDisplay').textContent = dateStr;
+            const monthDayYear = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+            document.getElementById('dateDisplay').innerHTML = `${monthDayYear}<br>${weekday}`;
         }
 
         // Fetch and display weather
