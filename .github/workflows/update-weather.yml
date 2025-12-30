@@ -1,0 +1,73 @@
+# GitHub Actions Weather Service
+# This replaces your PHP central service by running every 10 minutes
+# and updating a static JSON file that all displays can read
+
+name: Update Weather Data
+
+on:
+  schedule:
+    # Run every 10 minutes (6 times per hour = 144 times per day)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-weather:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Fetch weather data
+      run: |
+        # Fetch weather data from OpenWeatherMap API
+        WEATHER_DATA=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=Mora,MN,US&appid=${{ secrets.OPENWEATHER_API_KEY }}&units=imperial")
+        
+        # Check if request was successful
+        if [ $? -eq 0 ] && echo "$WEATHER_DATA" | grep -q '"cod":200'; then
+          # Create response with metadata
+          cat > weather-data.json << EOF
+{
+  "success": true,
+  "data": $WEATHER_DATA,
+  "cached": false,
+  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "next_update": "$(date -u -d '+10 minutes' +%Y-%m-%dT%H:%M:%SZ)",
+  "source": "GitHub Actions",
+  "api_calls_saved": "Serving unlimited displays from 144 daily API calls"
+}
+EOF
+        else
+          # Keep existing file if API fails, but update timestamp to show it's stale
+          if [ -f weather-data.json ]; then
+            # Update existing file with stale indicator
+            jq '.cached = true | .stale = true | .error = "API call failed, using cached data" | .timestamp = "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"' weather-data.json > weather-data-temp.json
+            mv weather-data-temp.json weather-data.json
+          else
+            # Create error response if no existing file
+            cat > weather-data.json << EOF
+{
+  "success": false,
+  "error": "Unable to fetch weather data",
+  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "next_retry": "$(date -u -d '+10 minutes' +%Y-%m-%dT%H:%M:%SZ)"
+}
+EOF
+          fi
+        fi
+        
+    - name: Commit updated weather data
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Weather Update Action"
+        git add weather-data.json
+        
+        # Only commit if there are changes
+        if ! git diff --staged --quiet; then
+          git commit -m "Update weather data: $(date)"
+          git push
+        else
+          echo "No weather data changes to commit"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
