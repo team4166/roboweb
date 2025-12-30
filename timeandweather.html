@@ -28,7 +28,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #c03dA5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -64,13 +64,37 @@
             box-shadow: 
                 0 20px 60px rgba(0, 61, 165, 0.1),
                 0 8px 25px rgba(0, 61, 165, 0.05);
-            padding: 50px 40px;
+            padding: 0;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 450px;
+            overflow: hidden;
+        }
+
+        .time-header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mps-logo-img {
+            max-width: 280px;
+            height: auto;
+        }
+
+        .time-content {
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .time-display {
@@ -302,9 +326,14 @@
 <body>
     <div class="container">
         <div class="widget time-widget" id="timeWidget">
-            <div class="widget-title">Time</div>
-            <div class="time-display" id="timeDisplay">00:00:00</div>
-            <div class="date-display" id="dateDisplay">Loading...</div>
+            <div class="time-header">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDMwMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeD0iNTAiIHk9IjQ1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk1PUkE8L3RleHQ+PHRleHQgeD0iNTAiIHk9IjExMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjM4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5NVVNUQU5HUzwvdGV4dD48L3N2Zz4=" alt="MORA Mustangs" class="mps-logo-img">
+            </div>
+            <div class="time-content">
+                <div class="widget-title">Time</div>
+                <div class="time-display" id="timeDisplay">00:00:00</div>
+                <div class="date-display" id="dateDisplay">Loading...</div>
+            </div>
         </div>
 
         <div class="widget weather-widget" id="weatherWidget">
