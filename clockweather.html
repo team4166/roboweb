@@ -117,7 +117,7 @@
         }
 
         .time-display {
-            font-size: 5.5rem;
+            font-size: 7rem;
             font-weight: 800;
             color: var(--mps-blue);
             margin: 30px 0;
@@ -477,17 +477,15 @@
         // Update time display
         function updateTime() {
             const now = new Date();
-            
+
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12;
-            const hoursStr = String(hours).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            
-            document.getElementById('timeDisplay').textContent = `${hoursStr}:${minutes}:${seconds} ${ampm}`;
-            
+
+            document.getElementById('timeDisplay').textContent = `${hours}:${minutes} ${ampm}`;
+
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const dateStr = now.toLocaleDateString('en-US', options);
             document.getElementById('dateDisplay').textContent = dateStr;
