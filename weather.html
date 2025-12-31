@@ -248,7 +248,7 @@
         .mustang-accent {
             position: absolute;
             bottom: 15px;
-            right: 20px;
+            left: 20px;
             width: 50px;
             height: 50px;
             background: linear-gradient(135deg, var(--mps-blue), #0052E6);
@@ -482,14 +482,6 @@
                         <div class="detail-label">Visibility</div>
                         <div class="detail-value">${visibility} mi</div>
                     </div>
-                </div>
-
-                <div class="update-time">
-                    Display updated: ${new Date().toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        timeZone: 'America/Chicago'
-                    })}
                 </div>
             `;
 
