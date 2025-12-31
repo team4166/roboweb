@@ -236,6 +236,15 @@
             border-top: 1px solid rgba(162, 170, 173, 0.2);
         }
 
+        .data-timestamp {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: var(--mps-gray);
+            font-style: italic;
+        }
+
         .mustang-accent {
             position: absolute;
             bottom: 15px;
@@ -326,8 +335,9 @@
                 Connecting to weather service...
             </div>
         </div>
-        
+
         <div class="mustang-accent">M</div>
+        <div class="data-timestamp" id="dataTimestamp"></div>
     </div>
 
     <script>
@@ -415,8 +425,8 @@
                 if (!weatherResponse.success) {
                     throw new Error(weatherResponse.error || 'Weather service error');
                 }
-                
-                displayWeatherData(weatherResponse.data);
+
+                displayWeatherData(weatherResponse.data, weatherResponse.timestamp);
                 
             } catch (error) {
                 console.error('Error fetching weather data:', error);
@@ -439,14 +449,14 @@
         }
 
         // Display weather data
-        function displayWeatherData(data) {
+        function displayWeatherData(data, timestamp) {
             const icon = weatherIcons[data.weather[0].icon] || '🌤️';
             const temp = Math.round(data.main.temp);
             const feelsLike = Math.round(data.main.feels_like);
             const humidity = data.main.humidity;
             const windSpeed = Math.round(data.wind.speed);
             const visibility = Math.round(data.visibility / 1609.34 * 10) / 10;
-            
+
             const weatherHTML = `
                 <div class="current-weather">
                     <div class="temperature">
@@ -458,7 +468,7 @@
                         <div class="feels-like">Feels like ${feelsLike}°F</div>
                     </div>
                 </div>
-                
+
                 <div class="weather-details">
                     <div class="detail-item">
                         <div class="detail-label">Humidity</div>
@@ -473,7 +483,7 @@
                         <div class="detail-value">${visibility} mi</div>
                     </div>
                 </div>
-                
+
                 <div class="update-time">
                     Display updated: ${new Date().toLocaleTimeString('en-US', {
                         hour: '2-digit',
@@ -482,8 +492,21 @@
                     })}
                 </div>
             `;
-            
+
             document.getElementById('weatherData').innerHTML = weatherHTML;
+
+            // Update data timestamp if available
+            if (timestamp) {
+                const timestampDate = new Date(timestamp);
+                document.getElementById('dataTimestamp').textContent =
+                    timestampDate.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZone: 'America/Chicago'
+                    });
+            }
         }
 
         // Initialize the digital signage display
