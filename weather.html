@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mora Public Schools - Weather Display</title>
+    <title>Weather Display - Mora Public Schools</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -94,6 +94,7 @@
 
         .weather-content {
             padding: 40px 35px;
+            position: relative;
         }
 
         .location {
@@ -257,15 +258,13 @@
 
         .status-indicator {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
+            top: 5px;
+            right: 10px;
+            background: transparent;
+            color: var(--mps-gray);
+            padding: 5px;
+            font-size: 0.65rem;
+            font-weight: 400;
             font-style: italic;
         }
 
