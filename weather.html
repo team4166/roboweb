@@ -24,7 +24,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #000000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -236,14 +236,6 @@
             border-top: 1px solid rgba(162, 170, 173, 0.2);
         }
 
-        .data-timestamp {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.75rem;
-            color: var(--mps-gray);
-            font-style: italic;
-        }
 
         .mustang-accent {
             position: absolute;
@@ -267,25 +259,14 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 0.7rem;
             font-weight: 600;
             backdrop-filter: blur(10px);
-        }
-
-        .status-indicator.live {
-            background: rgba(40, 167, 69, 0.2);
-        }
-
-        .status-indicator.cached {
-            background: rgba(255, 193, 7, 0.2);
-        }
-
-        .status-indicator.error {
-            background: rgba(220, 53, 69, 0.2);
+            font-style: italic;
         }
 
         /* Prevent text selection for kiosk mode */
@@ -337,7 +318,6 @@
         </div>
 
         <div class="mustang-accent">M</div>
-        <div class="data-timestamp" id="dataTimestamp"></div>
     </div>
 
     <script>
@@ -377,24 +357,26 @@
                 now.toLocaleDateString('en-US', options);
         }
 
-        // Update status indicator
+        // Update status indicator with timestamp
         function updateStatusIndicator(response) {
             const indicator = document.getElementById('statusIndicator');
-            
-            if (response.success) {
-                if (response.cached && response.stale) {
-                    indicator.textContent = 'STALE';
-                    indicator.className = 'status-indicator error';
-                } else if (response.cached) {
-                    indicator.textContent = 'CACHED';
-                    indicator.className = 'status-indicator cached';
-                } else {
-                    indicator.textContent = 'LIVE';
-                    indicator.className = 'status-indicator live';
-                }
-            } else {
+
+            if (response.success && response.timestamp) {
+                const timestampDate = new Date(response.timestamp);
+                indicator.textContent = timestampDate.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZone: 'America/Chicago'
+                });
+                indicator.className = 'status-indicator';
+            } else if (!response.success) {
                 indicator.textContent = 'ERROR';
-                indicator.className = 'status-indicator error';
+                indicator.className = 'status-indicator';
+            } else {
+                indicator.textContent = 'CONNECTING';
+                indicator.className = 'status-indicator';
             }
         }
 
@@ -486,19 +468,6 @@
             `;
 
             document.getElementById('weatherData').innerHTML = weatherHTML;
-
-            // Update data timestamp if available
-            if (timestamp) {
-                const timestampDate = new Date(timestamp);
-                document.getElementById('dataTimestamp').textContent =
-                    timestampDate.toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        timeZone: 'America/Chicago'
-                    });
-            }
         }
 
         // Initialize the digital signage display
