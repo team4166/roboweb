@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teleporting Time</title>
+    <title>Time-Mora Public Schools</title>
     <style>
         * {
             margin: 0;
@@ -14,52 +14,51 @@
         body {
             width: 100%;
             height: 100vh;
-            background: #c03daf;
+            background: #003DA5;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         .time-box {
-            position: fixed;
-            width: 580px;
-            padding: 60px;
+            width: 90vmin;
+            height: 90vmin;
+            padding: 0;
             background: white;
-            border-radius: 20px;
+            border-radius: 50%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .time-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #A2AAAD;
         }
 
         .time {
-            font-size: 80px;
+            font-size: 8vmin;
             font-weight: bold;
             color: #003DA5;
-            margin-bottom: 15px;
+            margin: 20px 0;
             font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
         }
 
         .date {
-            font-size: 32px;
-            color: #003DA5;
+            font-size: 2.5vmin;
+            color: #A2AAAD;
             font-weight: 500;
+            line-height: 1.4;
         }
 
         .logo {
-            width: 300px;
+            width: 40vmin;
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
     </style>
@@ -78,47 +77,24 @@
 
         function updateTime() {
             const now = new Date();
-            
-            // Format time as HH:MM:SS AM/PM
+
+            // Format time as H:MM AM/PM (no leading zero)
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12;
-            const hoursStr = String(hours).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            timeDisplay.textContent = `${hoursStr}:${minutes} ${ampm}`;
-            
-            // Format date as Day, Month Date, Year
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateStr = now.toLocaleDateString('en-US', options);
-            dateDisplay.textContent = dateStr;
-        }
+            timeDisplay.textContent = `${hours}:${minutes} ${ampm}`;
 
-        function teleport() {
-            const maxX = window.innerWidth - timeBox.offsetWidth;
-            const maxY = window.innerHeight - timeBox.offsetHeight;
-            
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-            
-            timeBox.style.left = randomX + 'px';
-            timeBox.style.top = randomY + 'px';
+            // Format date as Month Day, Year on first line, Weekday on second
+            const monthDayYear = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+            dateDisplay.innerHTML = `${monthDayYear}<br>${weekday}`;
         }
 
         // Update time every second
         updateTime();
         setInterval(updateTime, 1000);
-
-        // Auto teleport every 60 seconds
-        setInterval(() => {
-            teleport();
-        }, 60000);
-
-        // Manual teleport on click
-        timeBox.addEventListener('click', teleport);
-
-        // Initial teleport
-        teleport();
     </script>
 </body>
 </html>
