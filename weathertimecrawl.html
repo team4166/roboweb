@@ -61,11 +61,7 @@
                 0 0 10px rgba(255, 232, 31, 0.8),
                 0 0 20px rgba(255, 232, 31, 0.6),
                 0 0 30px rgba(255, 232, 31, 0.4);
-            animation: crawl 35s linear infinite;
-        }
-
-        .crawl-text-delayed {
-            animation-delay: -17.5s; /* Start halfway through the cycle */
+            animation: crawl 25s linear infinite;
         }
 
         @keyframes crawl {
@@ -73,14 +69,14 @@
                 top: 100%;
                 opacity: 0;
             }
-            2% {
+            3% {
                 opacity: 1;
             }
-            98% {
+            92% {
                 opacity: 1;
             }
             100% {
-                top: -80%;
+                top: -60%;
                 opacity: 0;
             }
         }
@@ -237,29 +233,6 @@
                 EXPLORING • ENGAGING • EMPOWERING
             </div>
         </div>
-
-        <div class="crawl-text crawl-text-delayed" id="crawlText2">
-            <div class="crawl-title">MORA MUSTANGS</div>
-            
-            <div class="crawl-section">
-                <div class="section-title">CURRENT TIME</div>
-                <div class="time-display" id="crawlTime2">00:00 <span class="time-ampm">PM</span></div>
-                <div class="date-day" id="crawlDay2">Loading...</div>
-                <div class="date-full" id="crawlDate2">Loading...</div>
-            </div>
-
-            <div class="crawl-section">
-                <div class="section-title">WEATHER REPORT</div>
-                <div class="weather-location" id="crawlLocation2">MORA, MINNESOTA</div>
-                <div class="weather-temp comfortable" id="crawlTemp2">--°F</div>
-                <div class="weather-info" id="crawlCondition2">Loading conditions...</div>
-                <div class="weather-details" id="crawlDetails2">Connecting to weather service...</div>
-            </div>
-
-            <div class="mustang-pride">
-                EXPLORING • ENGAGING • EMPOWERING
-            </div>
-        </div>
     </div>
 
     <script>
@@ -382,9 +355,7 @@
             hours = hours ? hours : 12;
             const minutes = String(now.getMinutes()).padStart(2, '0');
 
-            const timeHTML = `${hours}:${minutes} <span class="time-ampm">${ampm}</span>`;
-            document.getElementById('crawlTime').innerHTML = timeHTML;
-            document.getElementById('crawlTime2').innerHTML = timeHTML;
+            document.getElementById('crawlTime').innerHTML = `${hours}:${minutes} <span class="time-ampm">${ampm}</span>`;
 
             const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
             const dateOptions = {
@@ -396,8 +367,6 @@
             
             document.getElementById('crawlDay').textContent = weekday;
             document.getElementById('crawlDate').textContent = dateString;
-            document.getElementById('crawlDay2').textContent = weekday;
-            document.getElementById('crawlDate2').textContent = dateString;
         }
 
         // Fetch weather data
@@ -458,23 +427,14 @@
                 tempClass = 'hot'; // Red for 80°F and above
             }
             
-            const tempText = `${temp}°F ${icon}`;
-            const conditionText = `${data.weather[0].description.toUpperCase()} • FEELS LIKE ${feelsLike}°F`;
-            const detailsText = `HUMIDITY: ${humidity}% • WIND: ${windSpeed} MPH`;
+            const tempElement = document.getElementById('crawlTemp');
+            tempElement.textContent = `${temp}°F ${icon}`;
+            tempElement.className = `weather-temp ${tempClass}`;
             
-            // Update first crawl
-            const tempElement1 = document.getElementById('crawlTemp');
-            tempElement1.textContent = tempText;
-            tempElement1.className = `weather-temp ${tempClass}`;
-            document.getElementById('crawlCondition').textContent = conditionText;
-            document.getElementById('crawlDetails').textContent = detailsText;
-            
-            // Update second crawl
-            const tempElement2 = document.getElementById('crawlTemp2');
-            tempElement2.textContent = tempText;
-            tempElement2.className = `weather-temp ${tempClass}`;
-            document.getElementById('crawlCondition2').textContent = conditionText;
-            document.getElementById('crawlDetails2').textContent = detailsText;
+            document.getElementById('crawlCondition').textContent = 
+                `${data.weather[0].description.toUpperCase()} • FEELS LIKE ${feelsLike}°F`;
+            document.getElementById('crawlDetails').textContent = 
+                `HUMIDITY: ${humidity}% • WIND: ${windSpeed} MPH`;
         }
 
         // Initialize the display
