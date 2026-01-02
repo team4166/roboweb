@@ -51,7 +51,7 @@
             grid-template-columns: 2fr 1fr;
         }
 
-        /* Swapped: weather widget first (left), time widget second (right) */
+        /* Swapped: weather widget first (left), time widget second (right) y'all */
         .container:has(.weather-widget:first-child) {
             grid-template-columns: 1fr 2fr;
         }
@@ -237,7 +237,7 @@
         }
 
         .temp-value::after {
-            content: 'Â°F';
+            content: '°F';
             font-size: 1.4rem;
             font-weight: 600;
             color: var(--mps-gray);
@@ -324,11 +324,12 @@
             top: 5px;
             right: 10px;
             background: transparent;
-            color: var(--mps-gray);
+            color: rgba(255, 255, 255, 0.8);
             padding: 5px;
             font-size: 0.65rem;
             font-weight: 400;
             font-style: italic;
+            z-index: 3;
         }
 
         /* Responsive for smaller screens */
@@ -449,15 +450,15 @@
         };
 
         const weatherIcons = {
-            '01d': 'â˜€ï¸', '01n': 'ðŸŒ™',
-            '02d': 'â›…', '02n': 'â˜ï¸',
-            '03d': 'â˜ï¸', '03n': 'â˜ï¸',
-            '04d': 'â˜ï¸', '04n': 'â˜ï¸',
-            '09d': 'ðŸŒ§ï¸', '09n': 'ðŸŒ§ï¸',
-            '10d': 'ðŸŒ¦ï¸', '10n': 'ðŸŒ§ï¸',
-            '11d': 'â›ˆï¸', '11n': 'â›ˆï¸',
-            '13d': 'â„ï¸', '13n': 'â„ï¸',
-            '50d': 'ðŸŒ«ï¸', '50n': 'ðŸŒ«ï¸'
+            '01d': '☀️', '01n': '🌙',
+            '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️',
+            '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️',
+            '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️',
+            '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
         };
 
         let isSwapped = false;
@@ -544,7 +545,7 @@
 
         // Display weather data
         function displayWeatherData(data) {
-            const icon = weatherIcons[data.weather[0].icon] || 'ðŸŒ¤ï¸';
+            const icon = weatherIcons[data.weather[0].icon] || '🌤️';
             const temp = Math.round(data.main.temp);
             const feelsLike = Math.round(data.main.feels_like);
             const humidity = data.main.humidity;
@@ -559,7 +560,7 @@
                     <div class="weather-icon">${icon}</div>
                     <div class="weather-condition">
                         <div class="condition-text">${data.weather[0].description}</div>
-                        <div class="feels-like">Feels like ${feelsLike}Â°F</div>
+                        <div class="feels-like">Feels like ${feelsLike}°F</div>
                     </div>
                 </div>
                 
@@ -619,7 +620,7 @@
             // Update weather every 5 minutes
             setInterval(fetchWeatherData, CONFIG.WEATHER_UPDATE_INTERVAL);
             
-            // Swap widgets every 30 seconds
+            // Swap widgets every 20 minutes
             setInterval(swapWidgets, CONFIG.SWAP_INTERVAL);
         }
 
