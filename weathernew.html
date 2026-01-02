@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Display - Mora Public Schools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mps-blue: #003DA5;
+            --mps-gray: #A2AAAD;
+            --mps-white: #FFFFFF;
+            --mps-black: #2D2926;
+            --shadow-blue: rgba(0, 61, 165, 0.15);
+            --gradient-start: #003DA5;
+            --gradient-end: #0052E6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: none;
+            overflow: hidden;
+        }
+
+        /* Starfield Background Canvas */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Time Display Section */
+        .time-section {
+            text-align: center;
+            color: var(--mps-white);
+            flex: 1;
+        }
+
+        .current-time {
+            font-family: 'Courier New', monospace;
+            font-size: 8rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .current-date {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.2;
+        }
+
+        /* Weather Widget */
+        .weather-container {
+            background: var(--mps-white);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 61, 165, 0.1),
+                0 8px 25px rgba(0, 61, 165, 0.05);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.05)"/></svg>');
+            animation: drift 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .school-title {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mps-white);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+
+        .weather-content {
+            padding: 25px;
+            position: relative;
+        }
+
+        .current-weather {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(0, 61, 165, 0.08);
+        }
+
+        .temperature {
+            text-align: center;
+        }
+
+        .temp-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--mps-blue);
+            line-height: 1;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .temp-value::after {
+            content: '°F';
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--mps-gray);
+            position: absolute;
+            top: 0.3rem;
+            margin-left: 3px;
+        }
+
+        .weather-icon {
+            font-size: 4rem;
+            filter: drop-shadow(0 6px 12px rgba(0, 61, 165, 0.15));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .weather-description {
+            text-align: center;
+        }
+
+        .condition {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.1rem;
+            color: var(--mps-blue);
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        .feels-like {
+            font-size: 0.85rem;
+            color: var(--mps-gray);
+            font-weight: 400;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            background: rgba(0, 61, 165, 0.03);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 61, 165, 0.08);
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--mps-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-size: 1.2rem;
+            color: var(--mps-blue);
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--mps-gray);
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #d32f2f;
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .mustang-accent {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--mps-blue), #0052E6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            box-shadow: 0 6px 15px rgba(0, 61, 165, 0.2);
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            font-size: 0.65rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Starfield Background -->
+    <canvas id="starCanvas"></canvas>
+
+    <div class="main-container">
+        <!-- Time Display Section -->
+        <div class="time-section">
+            <div class="current-time" id="timeDisplay">00:00:00</div>
+            <div class="current-date" id="dateDisplay">Loading...</div>
+        </div>
+
+        <!-- Weather Widget -->
+        <div class="weather-container">
+            <div class="header">
+                <div class="status-indicator" id="statusIndicator">CONNECTING</div>
+                <h1 class="school-title">Mora Mustangs</h1>
+                <p class="tagline">Weather</p>
+            </div>
+
+            <div class="weather-content">
+                <div id="weatherData" class="loading">
+                    Connecting to weather service...
+                </div>
+            </div>
+
+            <div class="mustang-accent">M</div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration for Team 4166 Roboweb GitHub Pages
+        const CONFIG = {
+            WEATHER_DATA_URL: './weather-data.json',
+            UPDATE_INTERVAL: 300000, // 5 minutes
+            TIME_UPDATE_INTERVAL: 1000 // 1 second for smooth time updates
+        };
+
+        // Weather icon mapping
+        const weatherIcons = {
+            '01d': '☀️', '01n': '🌙',
+            '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️',
+            '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️',
+            '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️',
+            '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
+        };
+
+        // Starfield Configuration
+        const STARFIELD_CONFIG = {
+            starCount: 850,
+            speed: 0.2,
+            starColor: '255, 255, 255'
+        };
+
+        let stars = [];
+        let starCanvas, starCtx;
+        let starWidth, starHeight, starCenterX, starCenterY;
+
+        // Initialize Starfield
+        function initStarfield() {
+            starCanvas = document.getElementById('starCanvas');
+            starCtx = starCanvas.getContext('2d');
+            resizeStarfield();
+            
+            for (let i = 0; i < STARFIELD_CONFIG.starCount; i++) {
+                stars.push(new Star());
+            }
+            
+            animateStarfield();
+        }
+
+        function resizeStarfield() {
+            starWidth = window.innerWidth;
+            starHeight = window.innerHeight;
+            starCanvas.width = starWidth;
+            starCanvas.height = starHeight;
+            starCenterX = starWidth / 2;
+            starCenterY = starHeight / 2;
+        }
+
+        class Star {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = (Math.random() - 0.5) * starWidth * 2;
+                this.y = (Math.random() - 0.5) * starHeight * 2;
+                this.z = Math.random() * starWidth;
+                this.pz = this.z;
+            }
+
+            update() {
+                this.z = this.z - STARFIELD_CONFIG.speed * 10;
+                if (this.z <= 1) {
+                    this.init();
+                    this.z = starWidth;
+                    this.pz = this.z;
+                }
+            }
+
+            draw() {
+                let x = (this.x / this.z) * starCenterX + starCenterX;
+                let y = (this.y / this.z) * starCenterY + starCenterY;
+                let r = (1 - this.z / starWidth) * 3;
+
+                starCtx.fillStyle = `rgb(${STARFIELD_CONFIG.starColor})`;
+                starCtx.beginPath();
+                starCtx.arc(x, y, r, 0, Math.PI * 2);
+                starCtx.fill();
+
+                let px = (this.x / this.pz) * starCenterX + starCenterX;
+                let py = (this.y / this.pz) * starCenterY + starCenterY;
+                
+                starCtx.strokeStyle = `rgb(${STARFIELD_CONFIG.starColor})`;
+                starCtx.lineWidth = r;
+                starCtx.beginPath();
+                starCtx.moveTo(x, y);
+                starCtx.lineTo(px, py);
+                starCtx.stroke();
+
+                this.pz = this.z;
+            }
+        }
+
+        function animateStarfield() {
+            starCtx.fillStyle = '#000';
+            starCtx.fillRect(0, 0, starWidth, starHeight);
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animateStarfield);
+        }
+
+        // Update time display
+        function updateTime() {
+            const now = new Date();
+
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+
+            const monthDayYear = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+            document.getElementById('dateDisplay').innerHTML = `${weekday}<br>${monthDayYear}`;
+        }
+
+        // Update status indicator with timestamp
+        function updateStatusIndicator(response) {
+            const indicator = document.getElementById('statusIndicator');
+
+            if (response.success && response.timestamp) {
+                const timestampDate = new Date(response.timestamp);
+                indicator.textContent = timestampDate.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZone: 'America/Chicago'
+                });
+                indicator.className = 'status-indicator';
+            } else if (!response.success) {
+                indicator.textContent = 'ERROR';
+                indicator.className = 'status-indicator';
+            } else {
+                indicator.textContent = 'CONNECTING';
+                indicator.className = 'status-indicator';
+            }
+        }
+
+        // Fetch weather data from GitHub Pages
+        async function fetchWeatherData() {
+            try {
+                console.log('Fetching weather from Team 4166 Roboweb...');
+                
+                const url = `${CONFIG.WEATHER_DATA_URL}?t=${Date.now()}`;
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const weatherResponse = await response.json();
+                console.log('Weather response:', weatherResponse);
+                
+                updateStatusIndicator(weatherResponse);
+                
+                if (!weatherResponse.success) {
+                    throw new Error(weatherResponse.error || 'Weather service error');
+                }
+
+                displayWeatherData(weatherResponse.data, weatherResponse.timestamp);
+                
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                
+                updateStatusIndicator({ success: false });
+                
+                let errorMessage = 'Weather service unavailable. ';
+                
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage += 'Check internet connection.';
+                } else if (error.message.includes('404')) {
+                    errorMessage += 'Weather data not ready. GitHub Actions may still be setting up.';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                document.getElementById('weatherData').innerHTML = 
+                    `<div class="error">${errorMessage}</div>`;
+            }
+        }
+
+        // Display weather data
+        function displayWeatherData(data, timestamp) {
+            const icon = weatherIcons[data.weather[0].icon] || '🌤️';
+            const temp = Math.round(data.main.temp);
+            const feelsLike = Math.round(data.main.feels_like);
+            const humidity = data.main.humidity;
+            const windSpeed = Math.round(data.wind.speed);
+            const visibility = Math.round(data.visibility / 1609.34 * 10) / 10;
+
+            const weatherHTML = `
+                <div class="current-weather">
+                    <div class="temperature">
+                        <div class="temp-value">${temp}</div>
+                    </div>
+                    <div class="weather-icon">${icon}</div>
+                    <div class="weather-description">
+                        <div class="condition">${data.weather[0].description}</div>
+                        <div class="feels-like">Feels like ${feelsLike}°F</div>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Humidity</div>
+                        <div class="detail-value">${humidity}%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Wind</div>
+                        <div class="detail-value">${windSpeed} mph</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Visibility</div>
+                        <div class="detail-value">${visibility} mi</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('weatherData').innerHTML = weatherHTML;
+        }
+
+        // Initialize the digital signage display
+        function initDigitalSignage() {
+            console.log('Initializing Mora Weather Digital Signage with Starfield...');
+            console.log('Weather data URL:', CONFIG.WEATHER_DATA_URL);
+            
+            initStarfield();
+            updateTime();
+            fetchWeatherData();
+            
+            // Update time every second for smooth display
+            setInterval(updateTime, CONFIG.TIME_UPDATE_INTERVAL);
+            
+            // Update weather every 5 minutes
+            setInterval(fetchWeatherData, CONFIG.UPDATE_INTERVAL);
+            
+            // Handle window resize for starfield
+            window.addEventListener('resize', resizeStarfield);
+        }
+
+        // Start the display when page loads
+        document.addEventListener('DOMContentLoaded', initDigitalSignage);
+        
+        // Handle visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                fetchWeatherData();
+            }
+        });
+
+        // Auto-reload page daily for kiosk mode stability
+        setTimeout(() => {
+            window.location.reload();
+        }, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>
