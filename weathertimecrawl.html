@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mora Mustangs - Digital Display</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            overflow: hidden;
+            cursor: none;
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Starfield Background Canvas */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Star Wars Crawl Container */
+        .crawl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            perspective: 600px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .crawl-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 80%;
+            max-width: 800px;
+            transform: translateX(-50%) rotateX(20deg);
+            color: #FFE81F;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.4;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 10px rgba(255, 232, 31, 0.8),
+                0 0 20px rgba(255, 232, 31, 0.6),
+                0 0 30px rgba(255, 232, 31, 0.4);
+            animation: crawl 35s linear infinite;
+        }
+
+        .crawl-text-delayed {
+            animation-delay: -17.5s; /* Start halfway through the cycle */
+        }
+
+        @keyframes crawl {
+            0% {
+                top: 100%;
+                opacity: 0;
+            }
+            2% {
+                opacity: 1;
+            }
+            98% {
+                opacity: 1;
+            }
+            100% {
+                top: -80%;
+                opacity: 0;
+            }
+        }
+
+        .crawl-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: #003DA5;
+            text-shadow: 
+                0 0 15px rgba(0, 61, 165, 0.8),
+                0 0 30px rgba(0, 61, 165, 0.6);
+        }
+
+        .crawl-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #A2AAAD;
+            text-shadow: 
+                0 0 10px rgba(162, 170, 173, 0.8),
+                0 0 20px rgba(162, 170, 173, 0.6);
+        }
+
+        .time-display {
+            font-size: 12rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            margin: 1rem 0;
+            text-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.8),
+                0 0 40px rgba(0, 255, 65, 0.6),
+                0 0 60px rgba(0, 255, 65, 0.4);
+        }
+
+        .time-ampm {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .date-display {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #FFE81F;
+            margin: 1rem 0;
+        }
+
+        .date-day {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #FFE81F;
+            margin: 0.5rem 0;
+        }
+
+        .date-full {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #FFE81F;
+            margin: 0.5rem 0;
+        }
+
+        .weather-info {
+            font-size: 2.2rem;
+            margin: 0.8rem 0;
+            color: #FFE81F;
+        }
+
+        .weather-location {
+            font-size: 1.8rem;
+            margin: 0.8rem 0;
+            color: #A2AAAD;
+            font-weight: 600;
+            text-shadow: 
+                0 0 10px rgba(162, 170, 173, 0.8),
+                0 0 20px rgba(162, 170, 173, 0.6);
+        }
+
+        .weather-temp {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+
+        .weather-temp.cold {
+            color: #4FC3F7;
+            text-shadow: 
+                0 0 15px rgba(79, 195, 247, 0.8),
+                0 0 30px rgba(79, 195, 247, 0.6);
+        }
+
+        .weather-temp.comfortable {
+            color: #4CAF50;
+            text-shadow: 
+                0 0 15px rgba(76, 175, 80, 0.8),
+                0 0 30px rgba(76, 175, 80, 0.6);
+        }
+
+        .weather-temp.hot {
+            color: #FF6B6B;
+            text-shadow: 
+                0 0 15px rgba(255, 107, 107, 0.8),
+                0 0 30px rgba(255, 107, 107, 0.6);
+        }
+
+        .weather-details {
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+            color: #87CEEB;
+        }
+
+        .mustang-pride {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: #003DA5;
+            margin: 2rem 0;
+            font-style: italic;
+            text-shadow: 
+                0 0 10px rgba(0, 61, 165, 0.8),
+                0 0 20px rgba(0, 61, 165, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Starfield Background -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- Star Wars Crawl -->
+    <div class="crawl-container">
+        <div class="crawl-text" id="crawlText">
+            <div class="crawl-title">MORA MUSTANGS</div>
+            
+            <div class="crawl-section">
+                <div class="section-title">CURRENT TIME</div>
+                <div class="time-display" id="crawlTime">00:00 <span class="time-ampm">PM</span></div>
+                <div class="date-day" id="crawlDay">Loading...</div>
+                <div class="date-full" id="crawlDate">Loading...</div>
+            </div>
+
+            <div class="crawl-section">
+                <div class="section-title">WEATHER REPORT</div>
+                <div class="weather-location" id="crawlLocation">MORA, MINNESOTA</div>
+                <div class="weather-temp comfortable" id="crawlTemp">--°F</div>
+                <div class="weather-info" id="crawlCondition">Loading conditions...</div>
+                <div class="weather-details" id="crawlDetails">Connecting to weather service...</div>
+            </div>
+
+            <div class="mustang-pride">
+                EXPLORING • ENGAGING • EMPOWERING
+            </div>
+        </div>
+
+        <div class="crawl-text crawl-text-delayed" id="crawlText2">
+            <div class="crawl-title">MORA MUSTANGS</div>
+            
+            <div class="crawl-section">
+                <div class="section-title">CURRENT TIME</div>
+                <div class="time-display" id="crawlTime2">00:00 <span class="time-ampm">PM</span></div>
+                <div class="date-day" id="crawlDay2">Loading...</div>
+                <div class="date-full" id="crawlDate2">Loading...</div>
+            </div>
+
+            <div class="crawl-section">
+                <div class="section-title">WEATHER REPORT</div>
+                <div class="weather-location" id="crawlLocation2">MORA, MINNESOTA</div>
+                <div class="weather-temp comfortable" id="crawlTemp2">--°F</div>
+                <div class="weather-info" id="crawlCondition2">Loading conditions...</div>
+                <div class="weather-details" id="crawlDetails2">Connecting to weather service...</div>
+            </div>
+
+            <div class="mustang-pride">
+                EXPLORING • ENGAGING • EMPOWERING
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            WEATHER_DATA_URL: './weather-data.json',
+            UPDATE_INTERVAL: 300000, // 5 minutes
+            TIME_UPDATE_INTERVAL: 1000 // 1 second
+        };
+
+        // Weather icon mapping
+        const weatherIcons = {
+            '01d': '☀️', '01n': '🌙',
+            '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️',
+            '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️',
+            '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️',
+            '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
+        };
+
+        // Starfield Configuration
+        const STARFIELD_CONFIG = {
+            starCount: 1000,
+            speed: 0.15,
+            starColor: '255, 255, 255'
+        };
+
+        let stars = [];
+        let starCanvas, starCtx;
+        let starWidth, starHeight, starCenterX, starCenterY;
+
+        // Initialize Starfield
+        function initStarfield() {
+            starCanvas = document.getElementById('starCanvas');
+            starCtx = starCanvas.getContext('2d');
+            resizeStarfield();
+            
+            for (let i = 0; i < STARFIELD_CONFIG.starCount; i++) {
+                stars.push(new Star());
+            }
+            
+            animateStarfield();
+        }
+
+        function resizeStarfield() {
+            starWidth = window.innerWidth;
+            starHeight = window.innerHeight;
+            starCanvas.width = starWidth;
+            starCanvas.height = starHeight;
+            starCenterX = starWidth / 2;
+            starCenterY = starHeight / 2;
+        }
+
+        class Star {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = (Math.random() - 0.5) * starWidth * 2;
+                this.y = (Math.random() - 0.5) * starHeight * 2;
+                this.z = Math.random() * starWidth;
+                this.pz = this.z;
+            }
+
+            update() {
+                this.z = this.z - STARFIELD_CONFIG.speed * 10;
+                if (this.z <= 1) {
+                    this.init();
+                    this.z = starWidth;
+                    this.pz = this.z;
+                }
+            }
+
+            draw() {
+                let x = (this.x / this.z) * starCenterX + starCenterX;
+                let y = (this.y / this.z) * starCenterY + starCenterY;
+                let r = (1 - this.z / starWidth) * 2.5;
+
+                starCtx.fillStyle = `rgb(${STARFIELD_CONFIG.starColor})`;
+                starCtx.beginPath();
+                starCtx.arc(x, y, r, 0, Math.PI * 2);
+                starCtx.fill();
+
+                let px = (this.x / this.pz) * starCenterX + starCenterX;
+                let py = (this.y / this.pz) * starCenterY + starCenterY;
+                
+                starCtx.strokeStyle = `rgb(${STARFIELD_CONFIG.starColor})`;
+                starCtx.lineWidth = r * 0.5;
+                starCtx.beginPath();
+                starCtx.moveTo(x, y);
+                starCtx.lineTo(px, py);
+                starCtx.stroke();
+
+                this.pz = this.z;
+            }
+        }
+
+        function animateStarfield() {
+            starCtx.fillStyle = '#000';
+            starCtx.fillRect(0, 0, starWidth, starHeight);
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animateStarfield);
+        }
+
+        // Update time display in crawl
+        function updateTime() {
+            const now = new Date();
+
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const timeHTML = `${hours}:${minutes} <span class="time-ampm">${ampm}</span>`;
+            document.getElementById('crawlTime').innerHTML = timeHTML;
+            document.getElementById('crawlTime2').innerHTML = timeHTML;
+
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+            const dateOptions = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            const dateString = now.toLocaleDateString('en-US', dateOptions);
+            
+            document.getElementById('crawlDay').textContent = weekday;
+            document.getElementById('crawlDate').textContent = dateString;
+            document.getElementById('crawlDay2').textContent = weekday;
+            document.getElementById('crawlDate2').textContent = dateString;
+        }
+
+        // Fetch weather data
+        async function fetchWeatherData() {
+            try {
+                console.log('Fetching weather data...');
+                
+                const url = `${CONFIG.WEATHER_DATA_URL}?t=${Date.now()}`;
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const weatherResponse = await response.json();
+                
+                if (!weatherResponse.success) {
+                    throw new Error(weatherResponse.error || 'Weather service error');
+                }
+
+                displayWeatherData(weatherResponse.data);
+                
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                
+                let errorMessage = 'WEATHER DATA UNAVAILABLE';
+                
+                if (error.message.includes('404')) {
+                    errorMessage = 'WEATHER SERVICE INITIALIZING...';
+                }
+                
+                document.getElementById('crawlTemp').textContent = '--°F';
+                document.getElementById('crawlCondition').textContent = errorMessage;
+                document.getElementById('crawlDetails').textContent = 'STANDBY FOR UPDATES';
+            }
+        }
+
+        // Display weather data in crawl
+        function displayWeatherData(data) {
+            const icon = weatherIcons[data.weather[0].icon] || '🌤️';
+            const temp = Math.round(data.main.temp);
+            const feelsLike = Math.round(data.main.feels_like);
+            const humidity = data.main.humidity;
+            const windSpeed = Math.round(data.wind.speed);
+            
+            // Determine temperature color class
+            let tempClass = 'comfortable'; // Default green for 32-79°F
+            if (temp < 32) {
+                tempClass = 'cold'; // Blue for below freezing
+            } else if (temp >= 80) {
+                tempClass = 'hot'; // Red for 80°F and above
+            }
+            
+            const tempText = `${temp}°F ${icon}`;
+            const conditionText = `${data.weather[0].description.toUpperCase()} • FEELS LIKE ${feelsLike}°F`;
+            const detailsText = `HUMIDITY: ${humidity}% • WIND: ${windSpeed} MPH`;
+            
+            // Update first crawl
+            const tempElement1 = document.getElementById('crawlTemp');
+            tempElement1.textContent = tempText;
+            tempElement1.className = `weather-temp ${tempClass}`;
+            document.getElementById('crawlCondition').textContent = conditionText;
+            document.getElementById('crawlDetails').textContent = detailsText;
+            
+            // Update second crawl
+            const tempElement2 = document.getElementById('crawlTemp2');
+            tempElement2.textContent = tempText;
+            tempElement2.className = `weather-temp ${tempClass}`;
+            document.getElementById('crawlCondition2').textContent = conditionText;
+            document.getElementById('crawlDetails2').textContent = detailsText;
+        }
+
+        // Initialize the display
+        function initDisplay() {
+            console.log('Initializing Star Wars Crawl Display...');
+            
+            initStarfield();
+            updateTime();
+            fetchWeatherData();
+            
+            // Update time every second
+            setInterval(updateTime, CONFIG.TIME_UPDATE_INTERVAL);
+            
+            // Update weather every 5 minutes
+            setInterval(fetchWeatherData, CONFIG.UPDATE_INTERVAL);
+            
+            // Handle window resize for starfield
+            window.addEventListener('resize', resizeStarfield);
+        }
+
+        // Start the display when page loads
+        document.addEventListener('DOMContentLoaded', initDisplay);
+        
+        // Handle visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                fetchWeatherData();
+            }
+        });
+
+        // Auto-reload page daily for kiosk mode stability
+        setTimeout(() => {
+            window.location.reload();
+        }, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>
