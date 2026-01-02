@@ -23,7 +23,7 @@
         body {
             width: 100%;
             height: 100vh;
-            background: #003DA5;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +31,21 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
+            cursor: none;
+        }
+
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
         }
 
         .time-box {
@@ -80,7 +95,7 @@
         }
 
         .logo {
-            max-width: 80%;
+            max-width: 60%;
             height: auto;
             position: relative;
             z-index: 2;
@@ -98,7 +113,7 @@
         }
 
         .time {
-            font-size: 16vmin;
+            font-size: 18vmin;
             font-weight: bold;
             color: #003DA5;
             margin: 20px 0;
@@ -125,17 +140,110 @@
     </style>
 </head>
 <body>
-    <div class="time-box" id="timeBox">
-        <div class="time-header">
-            <img src="./whitehorselogo.png" alt="MPS Logo" class="logo">
-        </div>
-        <div class="time-content">
-            <div class="time" id="timeDisplay">00:00:00</div>
-            <div class="date" id="dateDisplay">Loading...</div>
+    <!-- Starfield Background Canvas -->
+    <canvas id="starCanvas"></canvas>
+
+    <div class="container">
+        <div class="time-box" id="timeBox">
+            <div class="time-header">
+                <img src="./whitehorselogo.png" alt="MPS Logo" class="logo">
+            </div>
+            <div class="time-content">
+                <div class="time" id="timeDisplay">00:00:00</div>
+                <div class="date" id="dateDisplay">Loading...</div>
+            </div>
         </div>
     </div>
 
     <script>
+        // === STARFIELD ANIMATION ===
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Starfield Settings
+        const starCount = 600;
+        const speed = 0.15;
+        const starColor = '255, 255, 255';
+        
+        let stars = [];
+        let width, height, centerX, centerY;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+
+        class Star {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = (Math.random() - 0.5) * width * 2;
+                this.y = (Math.random() - 0.5) * height * 2;
+                this.z = Math.random() * width;
+                this.pz = this.z;
+            }
+
+            update() {
+                this.z = this.z - speed * 10;
+                if (this.z <= 1) {
+                    this.init();
+                    this.z = width;
+                    this.pz = this.z;
+                }
+            }
+
+            draw() {
+                let x = (this.x / this.z) * centerX + centerX;
+                let y = (this.y / this.z) * centerY + centerY;
+                let r = (1 - this.z / width) * 2;
+
+                // Draw star
+                ctx.fillStyle = `rgba(${starColor}, ${1 - this.z / width})`;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw trail
+                let px = (this.x / this.pz) * centerX + centerX;
+                let py = (this.y / this.pz) * centerY + centerY;
+                
+                ctx.strokeStyle = `rgba(${starColor}, ${(1 - this.z / width) * 0.5})`;
+                ctx.lineWidth = r;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+
+                this.pz = this.z;
+            }
+        }
+
+        function initStarfield() {
+            resize();
+            stars = [];
+            for (let i = 0; i < starCount; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        function animateStarfield() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animateStarfield);
+        }
+
+        // === TIME DISPLAY ===
         const timeBox = document.getElementById('timeBox');
         const timeDisplay = document.getElementById('timeDisplay');
         const dateDisplay = document.getElementById('dateDisplay');
@@ -162,6 +270,20 @@
         // Update time every second
         updateTime();
         setInterval(updateTime, 1000);
+
+        // Initialize starfield
+        initStarfield();
+        animateStarfield();
+
+        // Event Listeners
+        window.addEventListener('resize', resize);
+
+        // Handle visibility changes for performance
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                updateTime();
+            }
+        });
     </script>
 </body>
 </html>
