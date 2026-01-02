@@ -237,7 +237,7 @@
         }
 
         .temp-value::after {
-            content: 'Â°F';
+            content: '°F';
             font-size: 1.4rem;
             font-weight: 600;
             color: var(--mps-gray);
@@ -321,14 +321,28 @@
 
         .status-indicator {
             position: absolute;
-            top: 5px;
-            right: 10px;
-            background: transparent;
-            color: var(--mps-gray);
-            padding: 5px;
+            top: 12px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 0.65rem;
-            font-weight: 400;
-            font-style: italic;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            z-index: 3;
+        }
+
+        .status-indicator.live {
+            background: rgba(40, 167, 69, 0.2);
+        }
+
+        .status-indicator.cached {
+            background: rgba(255, 193, 7, 0.2);
+        }
+
+        .status-indicator.error {
+            background: rgba(220, 53, 69, 0.2);
         }
 
         /* Responsive for smaller screens */
@@ -449,15 +463,15 @@
         };
 
         const weatherIcons = {
-            '01d': 'â˜€ï¸', '01n': 'ðŸŒ™',
-            '02d': 'â›…', '02n': 'â˜ï¸',
-            '03d': 'â˜ï¸', '03n': 'â˜ï¸',
-            '04d': 'â˜ï¸', '04n': 'â˜ï¸',
-            '09d': 'ðŸŒ§ï¸', '09n': 'ðŸŒ§ï¸',
-            '10d': 'ðŸŒ¦ï¸', '10n': 'ðŸŒ§ï¸',
-            '11d': 'â›ˆï¸', '11n': 'â›ˆï¸',
-            '13d': 'â„ï¸', '13n': 'â„ï¸',
-            '50d': 'ðŸŒ«ï¸', '50n': 'ðŸŒ«ï¸'
+            '01d': '☀️', '01n': '🌙',
+            '02d': '⛅', '02n': '☁️',
+            '03d': '☁️', '03n': '☁️',
+            '04d': '☁️', '04n': '☁️',
+            '09d': '🌧️', '09n': '🌧️',
+            '10d': '🌦️', '10n': '🌧️',
+            '11d': '⛈️', '11n': '⛈️',
+            '13d': '❄️', '13n': '❄️',
+            '50d': '🌫️', '50n': '🌫️'
         };
 
         let isSwapped = false;
@@ -519,32 +533,30 @@
             }
         }
 
-        // Update status indicator with timestamp
+        // Update status indicator
         function updateStatusIndicator(response) {
             const indicator = document.getElementById('statusIndicator');
-
-            if (response.success && response.timestamp) {
-                const timestampDate = new Date(response.timestamp);
-                indicator.textContent = timestampDate.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    timeZone: 'America/Chicago'
-                });
-                indicator.className = 'status-indicator';
-            } else if (!response.success) {
-                indicator.textContent = 'ERROR';
-                indicator.className = 'status-indicator';
+            
+            if (response.success) {
+                if (response.cached && response.stale) {
+                    indicator.textContent = 'STALE';
+                    indicator.className = 'status-indicator error';
+                } else if (response.cached) {
+                    indicator.textContent = 'CACHED';
+                    indicator.className = 'status-indicator cached';
+                } else {
+                    indicator.textContent = 'LIVE';
+                    indicator.className = 'status-indicator live';
+                }
             } else {
-                indicator.textContent = 'CONNECTING';
-                indicator.className = 'status-indicator';
+                indicator.textContent = 'ERROR';
+                indicator.className = 'status-indicator error';
             }
         }
 
         // Display weather data
         function displayWeatherData(data) {
-            const icon = weatherIcons[data.weather[0].icon] || 'ðŸŒ¤ï¸';
+            const icon = weatherIcons[data.weather[0].icon] || '🌤️';
             const temp = Math.round(data.main.temp);
             const feelsLike = Math.round(data.main.feels_like);
             const humidity = data.main.humidity;
@@ -559,7 +571,7 @@
                     <div class="weather-icon">${icon}</div>
                     <div class="weather-condition">
                         <div class="condition-text">${data.weather[0].description}</div>
-                        <div class="feels-like">Feels like ${feelsLike}Â°F</div>
+                        <div class="feels-like">Feels like ${feelsLike}°F</div>
                     </div>
                 </div>
                 
