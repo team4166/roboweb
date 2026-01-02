@@ -61,7 +61,7 @@
                 0 0 10px rgba(255, 232, 31, 0.8),
                 0 0 20px rgba(255, 232, 31, 0.6),
                 0 0 30px rgba(255, 232, 31, 0.4);
-            animation: crawl 30s linear infinite;
+            animation: crawl 45s linear infinite;
         }
 
         @keyframes crawl {
@@ -96,17 +96,17 @@
         }
 
         .section-title {
-            font-size: 3rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: #FFFFFF;
+            color: #A2AAAD;
             text-shadow: 
-                0 0 10px rgba(255, 255, 255, 0.8),
-                0 0 20px rgba(255, 255, 255, 0.6);
+                0 0 10px rgba(162, 170, 173, 0.8),
+                0 0 20px rgba(162, 170, 173, 0.6);
         }
 
         .time-display {
-            font-size: 7rem;
+            font-size: 9rem;
             font-weight: 900;
             color: #00FF41;
             margin: 1rem 0;
@@ -133,11 +133,38 @@
             color: #FFE81F;
         }
 
+        .weather-location {
+            font-size: 1.8rem;
+            margin: 0.8rem 0;
+            color: #A2AAAD;
+            font-weight: 600;
+            text-shadow: 
+                0 0 10px rgba(162, 170, 173, 0.8),
+                0 0 20px rgba(162, 170, 173, 0.6);
+        }
+
         .weather-temp {
             font-size: 4rem;
             font-weight: 900;
-            color: #FF6B6B;
             margin: 1rem 0;
+        }
+
+        .weather-temp.cold {
+            color: #4FC3F7;
+            text-shadow: 
+                0 0 15px rgba(79, 195, 247, 0.8),
+                0 0 30px rgba(79, 195, 247, 0.6);
+        }
+
+        .weather-temp.comfortable {
+            color: #4CAF50;
+            text-shadow: 
+                0 0 15px rgba(76, 175, 80, 0.8),
+                0 0 30px rgba(76, 175, 80, 0.6);
+        }
+
+        .weather-temp.hot {
+            color: #FF6B6B;
             text-shadow: 
                 0 0 15px rgba(255, 107, 107, 0.8),
                 0 0 30px rgba(255, 107, 107, 0.6);
@@ -178,8 +205,8 @@
 
             <div class="crawl-section">
                 <div class="section-title">WEATHER REPORT</div>
-                <div class="weather-info" id="crawlLocation">MORA, MINNESOTA</div>
-                <div class="weather-temp" id="crawlTemp">--°F</div>
+                <div class="weather-location" id="crawlLocation">MORA, MINNESOTA</div>
+                <div class="weather-temp comfortable" id="crawlTemp">--°F</div>
                 <div class="weather-info" id="crawlCondition">Loading conditions...</div>
                 <div class="weather-details" id="crawlDetails">Connecting to weather service...</div>
             </div>
@@ -372,7 +399,18 @@
             const humidity = data.main.humidity;
             const windSpeed = Math.round(data.wind.speed);
             
-            document.getElementById('crawlTemp').textContent = `${temp}°F ${icon}`;
+            // Determine temperature color class
+            let tempClass = 'comfortable'; // Default green for 32-79°F
+            if (temp < 32) {
+                tempClass = 'cold'; // Blue for below freezing
+            } else if (temp >= 80) {
+                tempClass = 'hot'; // Red for 80°F and above
+            }
+            
+            const tempElement = document.getElementById('crawlTemp');
+            tempElement.textContent = `${temp}°F ${icon}`;
+            tempElement.className = `weather-temp ${tempClass}`;
+            
             document.getElementById('crawlCondition').textContent = 
                 `${data.weather[0].description.toUpperCase()} • FEELS LIKE ${feelsLike}°F`;
             document.getElementById('crawlDetails').textContent = 
