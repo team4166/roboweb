@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time - Mora Public Schools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mps-blue: #003DA5;
+            --mps-gray: #A2AAAD;
+            --mps-white: #FFFFFF;
+            --mps-black: #2D2926;
+            --gradient-start: #003DA5;
+            --gradient-end: #0052E6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: none;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            perspective: 1000px;
+        }
+
+        .time-widget {
+            background: var(--mps-white);
+            border-radius: 50%;
+            box-shadow:
+                0 20px 60px rgba(255, 255, 255, 0.1),
+                0 8px 25px rgba(255, 255, 255, 0.05);
+            border: 3px solid var(--mps-gray);
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90vmin;
+            height: 90vmin;
+            max-width: 650px;
+            max-height: 650px;
+            min-width: 400px;
+            min-height: 400px;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotateZ(0deg);
+                box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1), 0 8px 25px rgba(255, 255, 255, 0.05);
+            }
+            50% { 
+                transform: translateY(-15px) rotateZ(0.5deg);
+                box-shadow: 0 30px 80px rgba(255, 255, 255, 0.15), 0 12px 35px rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        .time-header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 30px;
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.05)"/></svg>');
+            animation: drift 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .mps-logo-img {
+            max-width: 60%;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .time-content {
+            padding: 40px 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .time-display {
+            font-size: 16vmin;
+            font-weight: 800;
+            color: var(--mps-blue);
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 4px;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 61, 165, 0.1);
+        }
+
+        .date-display {
+            font-size: 4vmin;
+            color: var(--mps-gray);
+            font-weight: 500;
+            margin-top: 25px;
+            text-align: center;
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(162, 170, 173, 0.1);
+        }
+
+        .widget-title {
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.6rem;
+            color: var(--mps-white);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 800px) {
+            .time-widget {
+                width: 85vmin;
+                height: 85vmin;
+                min-width: 350px;
+                min-height: 350px;
+            }
+            
+            .time-display {
+                font-size: 12vmin;
+                letter-spacing: 2px;
+            }
+            
+            .date-display {
+                font-size: 3vmin;
+            }
+            
+            .widget-title {
+                font-size: 1.2rem;
+            }
+            
+            .time-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .time-widget {
+                width: 90vw;
+                height: 90vw;
+                min-width: 300px;
+                min-height: 300px;
+            }
+            
+            .time-display {
+                font-size: 10vmin;
+                letter-spacing: 1px;
+            }
+            
+            .date-display {
+                font-size: 2.5vmin;
+            }
+            
+            .widget-title {
+                font-size: 1rem;
+            }
+            
+            .time-content {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Hide scrollbars for a cleaner look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        html {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Starfield Background Canvas -->
+    <canvas id="starCanvas"></canvas>
+
+    <div class="container">
+        <div class="time-widget" id="timeWidget">
+            <div class="time-header">
+                <img src="./whitehorselogo.png" alt="MPS Logo" class="mps-logo-img">
+                <div class="widget-title">Time</div>
+            </div>
+            <div class="time-content">
+                <div class="time-display" id="timeDisplay">00:00:00</div>
+                <div class="date-display" id="dateDisplay">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === STARFIELD ANIMATION ===
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Starfield Settings
+        const starCount = 600;
+        const speed = 0.15;
+        const starColor = '255, 255, 255';
+        
+        let stars = [];
+        let width, height, centerX, centerY;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+
+        class Star {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = (Math.random() - 0.5) * width * 2;
+                this.y = (Math.random() - 0.5) * height * 2;
+                this.z = Math.random() * width;
+                this.pz = this.z;
+            }
+
+            update() {
+                this.z = this.z - speed * 10;
+                if (this.z <= 1) {
+                    this.init();
+                    this.z = width;
+                    this.pz = this.z;
+                }
+            }
+
+            draw() {
+                let x = (this.x / this.z) * centerX + centerX;
+                let y = (this.y / this.z) * centerY + centerY;
+                let r = (1 - this.z / width) * 2;
+
+                // Draw star
+                ctx.fillStyle = `rgba(${starColor}, ${1 - this.z / width})`;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw trail
+                let px = (this.x / this.pz) * centerX + centerX;
+                let py = (this.y / this.pz) * centerY + centerY;
+                
+                ctx.strokeStyle = `rgba(${starColor}, ${(1 - this.z / width) * 0.5})`;
+                ctx.lineWidth = r;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+
+                this.pz = this.z;
+            }
+        }
+
+        function initStarfield() {
+            resize();
+            stars = [];
+            for (let i = 0; i < starCount; i++) {
+                stars.push(new Star());
+            }
+        }
+
+        function animateStarfield() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animateStarfield);
+        }
+
+        // === TIME DISPLAY ===
+        function updateTime() {
+            const now = new Date();
+
+            // Format time as H:MM AM/PM (no leading zero)
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            document.getElementById('timeDisplay').textContent = `${hours}:${minutes} ${ampm}`;
+
+            // Format date
+            const monthDayYear = now.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            const weekday = now.toLocaleDateString('en-US', { weekday: 'long' });
+            
+            document.getElementById('dateDisplay').innerHTML = `${monthDayYear}<br>${weekday}`;
+        }
+
+        // === INITIALIZATION ===
+        function init() {
+            console.log('Initializing Enhanced MPS Time Display...');
+            
+            // Initialize starfield
+            initStarfield();
+            animateStarfield();
+            
+            // Initialize time display
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', resize);
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Handle visibility changes for performance
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                updateTime();
+            }
+        });
+
+        // Auto-reload for kiosk mode stability (24 hours)
+        setTimeout(() => {
+            window.location.reload();
+        }, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>
