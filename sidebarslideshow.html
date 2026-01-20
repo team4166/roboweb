@@ -417,21 +417,7 @@
             display: block;
         }
 
-        /* Layout switch indicator */
-        .layout-indicator {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--accent-cyan);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-        }
+
 
         /* Responsive adjustments */
         @media (max-width: 1400px) {
@@ -469,8 +455,7 @@
     </style>
 </head>
 <body>
-    <div class="layout-indicator" id="layoutIndicator">SIDEBAR LEFT • Next switch in <span id="countdown">20:00</span></div>
-    
+
     <div class="main-container layout-sidebar-left" id="mainContainer">
         <div class="weather-sidebar">
             <div class="header">
@@ -503,7 +488,7 @@
         </div>
 
         <div class="slideshow-main">
-            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSIz_6lj04GsIs9RVXWv5AAXCR5SRwPg8Yuz3bThGWCDjlalCphGpaMgrwERfg7J3ELlV_Niqla7x7O/embed?start=true&loop=true&delayms=15000" 
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSIz_6lj04GsIs9RVXWv5AAXCR5SRwPg8Yuz3bThGWCDjlalCphGpaMgrwERfg7J3ELlV_Niqla7x7O/embed?start=true&loop=true&delayms=15000&rm=minimal" 
                     allowfullscreen="true" 
                     mozallowfullscreen="true" 
                     webkitallowfullscreen="true">
@@ -533,8 +518,6 @@
 
         let isRightLayout = false;
         let layoutTimer;
-        let countdownTimer;
-        let timeRemaining = CONFIG.LAYOUT_SWITCH_INTERVAL / 1000; // in seconds
 
         // Update time display
         function updateTime() {
@@ -558,41 +541,18 @@
         // Switch layout between sidebar left and right
         function switchLayout() {
             const container = document.getElementById('mainContainer');
-            const indicator = document.getElementById('layoutIndicator');
             
             if (isRightLayout) {
                 container.classList.remove('layout-sidebar-right');
                 container.classList.add('layout-sidebar-left');
-                indicator.innerHTML = 'SIDEBAR LEFT • Next switch in <span id="countdown">20:00</span>';
                 isRightLayout = false;
             } else {
                 container.classList.remove('layout-sidebar-left');
                 container.classList.add('layout-sidebar-right');
-                indicator.innerHTML = 'SIDEBAR RIGHT • Next switch in <span id="countdown">20:00</span>';
                 isRightLayout = true;
             }
             
-            // Reset countdown
-            timeRemaining = CONFIG.LAYOUT_SWITCH_INTERVAL / 1000;
             console.log(`Layout switched to: ${isRightLayout ? 'RIGHT' : 'LEFT'}`);
-        }
-
-        // Update countdown display
-        function updateCountdown() {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            const display = `${minutes}:${String(seconds).padStart(2, '0')}`;
-            
-            const countdownElement = document.getElementById('countdown');
-            if (countdownElement) {
-                countdownElement.textContent = display;
-            }
-            
-            timeRemaining--;
-            
-            if (timeRemaining < 0) {
-                timeRemaining = CONFIG.LAYOUT_SWITCH_INTERVAL / 1000;
-            }
         }
 
         // Fetch and display weather
@@ -707,9 +667,6 @@
             
             // Switch layout every 20 minutes
             layoutTimer = setInterval(switchLayout, CONFIG.LAYOUT_SWITCH_INTERVAL);
-            
-            // Update countdown every second
-            countdownTimer = setInterval(updateCountdown, 1000);
             
             console.log('Layout switching enabled: Every 20 minutes for burn-in protection');
         }
