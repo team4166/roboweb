@@ -38,6 +38,7 @@ function makeList() {
         { name: "Bill Kluge", title: "Lead Coach 2", tier: "coach" },
         { name: "Elizabeth Denzine", title: "Mentor", tier: "coach" },
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
+         { name: "Olof Bakke", title: "Alumni '22-'25 Team 4166", tier: "Mentor" },
         
         
         // Captain
