@@ -52,7 +52,7 @@ function makeList() {
         { name: "Mike Anderson", title: "Programming", tier: "member" },
         { name: "Teah Van Hale", title: "Fabrication", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
-        { name: "Jonas Rittenour", title: "Fabrication", tier: "member" },
+        { name: "Jonas Rittenour", title: "Fabrication, Design", tier: "member" },
         { name: "Annabell Fanfulik", title: "Programming", tier: "member" },
          
         // Apprentices
