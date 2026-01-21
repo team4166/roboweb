@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyClocksidePrezzi</title>
+    <title>Mora Mustangs - Weather & Presentations</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600;700;900&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -512,6 +512,7 @@
             WEATHER_UPDATE_INTERVAL: 300000, // 5 minutes
             TIME_UPDATE_INTERVAL: 1000, // 1 second
             LAYOUT_SWITCH_INTERVAL: 1200000, // 20 minutes
+            SLIDESHOW_REFRESH_INTERVAL: 1800000, // 30 minutes
         };
 
         const weatherIcons = {
@@ -546,6 +547,19 @@
             
             document.getElementById('dateDisplay').textContent = monthDayYear;
             document.getElementById('dayDisplay').textContent = weekday;
+        }
+
+        // Refresh the Google Slides iframe
+        function refreshSlideshow() {
+            const iframe = document.querySelector('.slideshow-main iframe');
+            if (iframe) {
+                const currentSrc = iframe.src;
+                // Add a timestamp parameter to force refresh
+                const separator = currentSrc.includes('?') ? '&' : '?';
+                const newSrc = currentSrc.split('?')[0] + '?start=true&loop=true&delayms=15000&rm=minimal&_refresh=' + Date.now();
+                iframe.src = newSrc;
+                console.log('Slideshow refreshed at:', new Date().toLocaleTimeString());
+            }
         }
 
         // Switch layout between sidebar left and right
@@ -658,10 +672,14 @@
             // Update weather every 5 minutes
             setInterval(fetchWeatherData, CONFIG.WEATHER_UPDATE_INTERVAL);
             
-            // Switch layout every 20 minutes kk
+            // Switch layout every 20 minutes
             layoutTimer = setInterval(switchLayout, CONFIG.LAYOUT_SWITCH_INTERVAL);
             
+            // Refresh slideshow every hour
+            setInterval(refreshSlideshow, CONFIG.SLIDESHOW_REFRESH_INTERVAL);
+            
             console.log('Layout switching enabled: Every 20 minutes for burn-in protection');
+            console.log('Slideshow refresh enabled: Every 30 minutes for content updates');
         }
 
         document.addEventListener('DOMContentLoaded', init);
