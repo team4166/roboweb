@@ -38,7 +38,7 @@ function makeList() {
         { name: "Bill Kluge", title: "Lead Coach 2", tier: "coach" },
         { name: "Elizabeth Denzine", title: "Mentor", tier: "coach" },
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
-        { name: "Joe Hoe " , title: " Building Coach" , tier: " coach" },
+        
         
         // Captain
         //we might have more people
@@ -48,19 +48,18 @@ function makeList() {
           
         { name: "Bee Ritter", title: "Marketing/Fabrication", tier: "member" },
         { name: "Haillie Saxon", title: "Marketing/Fabrication", tier: "member" },
-        { name: "Mike Anderson", title: "Coding", tier: "member" },
-        { name: "Teah Van Hale", title: "Coding", tier: "member" },
+        { name: "Mike Anderson", title: "Programming", tier: "member" },
+        { name: "Teah Van Hale", title: "Fabrication", tier: "member" },
         { name: "Brayden Packer", title: "Fabrication", tier: "member" },
+        { name: "Jonas Rittenour", title: "Fabrication", tier: "member" },
+        { name: "Annabell Fanfulik", title: "Programming", tier: "member" },
          
         // Apprentices
-        //make sure that if they are aprenticecs in 8th grade that in 9th grade they will be a member
-        
-        { name: "Weston Skow", title: "Fabrication", tier: "apprentice" },
-        { name: "Annabell Fanfulik", title: "Coding", tier: "apprentice" },
-        { name: "Timmy Ryan", title: "Fabrication", tier: "apprentice" },
-        { name: "Brittainica Hansen", title: "Safety", tier: "apprentice" },
-        { name: "Clara Hagen", title: "Marketing Apprentice", tier: "apprentice" },
-        { name: "Michael Pettengill", title: "Coding Apprentice", tier: "apprentice" }
+          
+        { name: "Weston Skow", title: "Fabrication", tier: "apprentice" }, 
+        { name: "Jack Hollerbach", title: "Programming", tier: "apprentice" },
+        { name: "Benjamin Rodenborg", title: "Programming", tier: "apprentice" },
+        { name: "Brittainica Hansen", title: "Safety", tier: "apprentice" }
         ];
 
     // Separate and sort members by tier
