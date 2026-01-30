@@ -482,7 +482,28 @@
             WEATHER_UPDATE_INTERVAL: 300000, // 5 minutes
             TIME_UPDATE_INTERVAL: 1000, // 1 second
             LAYOUT_SWITCH_INTERVAL: 1200000, // 20 minutes
+            SLIDESHOW_REFRESH_INTERVAL: 1800000, // 30 minutes
+            FETCH_TIMEOUT: 10000, // 10 seconds timeout
         };
+
+        // Store interval IDs for cleanup
+        const intervalIds = [];
+
+        // Fetch with timeout
+        function fetchWithTimeout(url, timeout = CONFIG.FETCH_TIMEOUT) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+            return fetch(url, { signal: controller.signal })
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    return response;
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    throw error;
+                });
+        }
 
         const weatherIcons = {
             '01d': '☀️', '01n': '🌙',
@@ -535,18 +556,36 @@
             console.log(`Layout switched to: ${isRightLayout ? 'RIGHT' : 'LEFT'}`);
         }
 
+        // Refresh the Google Slides iframe
+        function refreshSlideshow() {
+            try {
+                const iframe = document.querySelector('.slideshow-main iframe');
+                if (!iframe) {
+                    console.warn('Slideshow iframe not found');
+                    return;
+                }
+
+                const currentSrc = iframe.src;
+                if (!currentSrc) {
+                    console.warn('Slideshow src is empty');
+                    return;
+                }
+
+                // Add a timestamp parameter to force refresh
+                const newSrc = currentSrc.split('?')[0] + '?start=true&loop=true&delayms=15000&rm=minimal&_refresh=' + Date.now();
+                iframe.src = newSrc;
+                console.log('Slideshow refreshed at:', new Date().toLocaleTimeString());
+            } catch (error) {
+                console.error('Error refreshing slideshow:', error.message);
+            }
+        }
+
         // Fetch and display weather
         async function fetchWeatherData() {
             try {
                 const url = `${CONFIG.WEATHER_DATA_URL}?t=${Date.now()}`;
                 
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Cache-Control': 'no-cache'
-                    }
-                });
+                const response = await fetchWithTimeout(url, CONFIG.FETCH_TIMEOUT);
 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -560,18 +599,24 @@
                 }
                 
                 displayWeatherData(weatherResponse.data);
+                console.log('Weather data updated successfully at:', new Date().toLocaleTimeString());
                 
             } catch (error) {
-                console.error('Error fetching weather:', error);
+                console.error('Error fetching weather:', error.message);
                 updateStatusIndicator({ success: false });
                 
                 let errorMessage = 'Weather service unavailable.';
                 if (error.message.includes('404')) {
                     errorMessage += ' GitHub Actions setting up...';
+                } else if (error.name === 'AbortError') {
+                    errorMessage = 'Weather service timeout. Retrying...';
                 }
                 
-                document.getElementById('weatherContent').innerHTML = 
-                    `<div class="error">${errorMessage}</div>`;
+                // Only update UI if container exists
+                const weatherContent = document.getElementById('weatherContent');
+                if (weatherContent) {
+                    weatherContent.innerHTML = `<div class="error">${errorMessage}</div>`;
+                }
             }
         }
 
@@ -636,19 +681,53 @@
         // Initialize
         function init() {
             console.log('Initializing Mora Display Combo...');
-            updateTime();
-            fetchWeatherData();
+            
+            try {
+                updateTime();
+                fetchWeatherData();
+            } catch (error) {
+                console.error('Error during initialization:', error.message);
+            }
             
             // Update time every second
-            setInterval(updateTime, CONFIG.TIME_UPDATE_INTERVAL);
+            intervalIds.push(setInterval(() => {
+                try {
+                    updateTime();
+                } catch (error) {
+                    console.error('Error updating time:', error.message);
+                }
+            }, CONFIG.TIME_UPDATE_INTERVAL));
             
             // Update weather every 5 minutes
-            setInterval(fetchWeatherData, CONFIG.WEATHER_UPDATE_INTERVAL);
+            intervalIds.push(setInterval(() => {
+                try {
+                    fetchWeatherData();
+                } catch (error) {
+                    console.error('Error updating weather:', error.message);
+                }
+            }, CONFIG.WEATHER_UPDATE_INTERVAL));
             
             // Switch layout every 20 minutes
-            layoutTimer = setInterval(switchLayout, CONFIG.LAYOUT_SWITCH_INTERVAL);
+            layoutTimer = setInterval(() => {
+                try {
+                    switchLayout();
+                } catch (error) {
+                    console.error('Error switching layout:', error.message);
+                }
+            }, CONFIG.LAYOUT_SWITCH_INTERVAL);
+            
+            // Refresh slideshow every 30 minutes
+            intervalIds.push(setInterval(() => {
+                try {
+                    refreshSlideshow();
+                } catch (error) {
+                    console.error('Error refreshing slideshow:', error.message);
+                }
+            }, CONFIG.SLIDESHOW_REFRESH_INTERVAL));
             
             console.log('Layout switching enabled: Every 20 minutes for burn-in protection');
+            console.log('Slideshow refresh enabled: Every 30 minutes for content updates');
+            console.log('Fetch timeout set to: ' + CONFIG.FETCH_TIMEOUT + 'ms');
         }
 
         document.addEventListener('DOMContentLoaded', init);
@@ -656,12 +735,30 @@
         // Handle visibility changes
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
-                fetchWeatherData();
+                try {
+                    fetchWeatherData();
+                } catch (error) {
+                    console.error('Error fetching weather on visibility change:', error.message);
+                }
             }
         });
 
+        // Cleanup function to prevent memory leaks
+        function cleanup() {
+            intervalIds.forEach(id => clearInterval(id));
+            if (layoutTimer) clearInterval(layoutTimer);
+            intervalIds.length = 0;
+            console.log('Intervals cleared for page reload');
+        }
+
         // Auto-reload page daily for kiosk mode stability
         setTimeout(() => {
+            console.log('Performing scheduled page reload for stability...');
+            try {
+                cleanup();
+            } catch (error) {
+                console.error('Error during cleanup:', error.message);
+            }
             window.location.reload();
         }, 24 * 60 * 60 * 1000);
     </script>
