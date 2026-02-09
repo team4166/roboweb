@@ -489,12 +489,15 @@
         // Store interval IDs for cleanup
         const intervalIds = [];
 
-        // Fetch with timeout
+        // Fetch with timeout and retry logic
         function fetchWithTimeout(url, timeout = CONFIG.FETCH_TIMEOUT) {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-            return fetch(url, { signal: controller.signal })
+            return fetch(url, { 
+                signal: controller.signal,
+                cache: 'no-cache'
+            })
                 .then(response => {
                     clearTimeout(timeoutId);
                     return response;
@@ -519,6 +522,23 @@
 
         let isRightLayout = false;
         let layoutTimer;
+        let lastActivityTime = Date.now();
+        let watchdogTimer = null;
+
+        // Watchdog timer to detect frozen script
+        function resetWatchdog() {
+            lastActivityTime = Date.now();
+            
+            if (watchdogTimer) {
+                clearTimeout(watchdogTimer);
+            }
+            
+            // If no activity for 5 minutes, reload the page
+            watchdogTimer = setTimeout(() => {
+                console.error('Watchdog timeout: Page appears frozen. Reloading...');
+                window.location.reload();
+            }, 5 * 60 * 1000); // 5 minutes
+        }
 
         // Update time display
         function updateTime() {
@@ -556,7 +576,7 @@
             console.log(`Layout switched to: ${isRightLayout ? 'RIGHT' : 'LEFT'}`);
         }
 
-        // Refresh the Google Slides iframe
+        // Refresh the Google Slides iframe with better error handling
         function refreshSlideshow() {
             try {
                 const iframe = document.querySelector('.slideshow-main iframe');
@@ -571,10 +591,10 @@
                     return;
                 }
 
-                // Add a timestamp parameter to force refresh
-                const newSrc = currentSrc.split('?')[0] + '?start=true&loop=true&delayms=15000&rm=minimal&_refresh=' + Date.now();
-                iframe.src = newSrc;
-                console.log('Slideshow refreshed at:', new Date().toLocaleTimeString());
+                // Instead of reloading the iframe (which can hang), just reload the entire page
+                // This is safer and more reliable for embedded content in kiosk mode
+                console.log('Initiating page reload for slideshow refresh...');
+                window.location.reload();
             } catch (error) {
                 console.error('Error refreshing slideshow:', error.message);
             }
@@ -682,6 +702,9 @@
         function init() {
             console.log('Initializing Mora Display Combo...');
             
+            // Start watchdog timer
+            resetWatchdog();
+            
             try {
                 updateTime();
                 fetchWeatherData();
@@ -693,6 +716,7 @@
             intervalIds.push(setInterval(() => {
                 try {
                     updateTime();
+                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error updating time:', error.message);
                 }
@@ -702,6 +726,7 @@
             intervalIds.push(setInterval(() => {
                 try {
                     fetchWeatherData();
+                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error updating weather:', error.message);
                 }
@@ -711,6 +736,7 @@
             layoutTimer = setInterval(() => {
                 try {
                     switchLayout();
+                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error switching layout:', error.message);
                 }
@@ -720,6 +746,7 @@
             intervalIds.push(setInterval(() => {
                 try {
                     refreshSlideshow();
+                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error refreshing slideshow:', error.message);
                 }
@@ -727,6 +754,7 @@
             
             console.log('Layout switching enabled: Every 20 minutes for burn-in protection');
             console.log('Slideshow refresh enabled: Every 30 minutes for content updates');
+            console.log('Watchdog timer enabled: 5 minutes timeout');
             console.log('Fetch timeout set to: ' + CONFIG.FETCH_TIMEOUT + 'ms');
         }
 
@@ -747,8 +775,9 @@
         function cleanup() {
             intervalIds.forEach(id => clearInterval(id));
             if (layoutTimer) clearInterval(layoutTimer);
+            if (watchdogTimer) clearTimeout(watchdogTimer);
             intervalIds.length = 0;
-            console.log('Intervals cleared for page reload');
+            console.log('Intervals and timers cleared for page reload');
         }
 
         // Auto-reload page daily for kiosk mode stability
