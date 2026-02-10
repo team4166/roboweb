@@ -57,7 +57,7 @@ function makeList() {
          
         // Apprentices
           
-        { name: "Weston Skow", title: "Fabrication", tier: "apprentice" }, 
+        //{ name: "Weston Skow", title: "Fabrication", tier: "apprentice" }, 
         { name: "Jack Hollerbach", title: "Programming", tier: "apprentice" },
         { name: "Gavin Oslin", title: "Fabrication", tier: "apprentice" },
         { name: "Brittainica Hansen", title: "Programming", tier: "apprentice" }
