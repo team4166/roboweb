@@ -59,8 +59,8 @@ function makeList() {
           
         { name: "Weston Skow", title: "Fabrication", tier: "apprentice" }, 
         { name: "Jack Hollerbach", title: "Programming", tier: "apprentice" },
-        { name: "Benjamin Rodenborg", title: "Programming", tier: "apprentice" },
-        { name: "Brittainica Hansen", title: "Safety", tier: "apprentice" }
+        { name: "Gavin Oslin", title: "Fabrication", tier: "apprentice" },
+        { name: "Brittainica Hansen", title: "Programming", tier: "apprentice" }
         ];
 
     // Separate and sort members by tier
