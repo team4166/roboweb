@@ -36,7 +36,8 @@ function makeList() {
         { name: "Duke Pancake", title: "Lead Coach", tier: "coach" },
         { name: "Amy Schifsky", title: "Business Coach", tier: "coach" },
         { name: "Bill Kluge", title: "Lead Coach 2", tier: "coach" },
-        { name: "Elizabeth Denzine", title: "Mentor", tier: "coach" },
+        { name: "Elizabeth Denzine", title: "JV Coach", tier: "coach" },
+        { name: "Karl Norvell", title: "JV Coach", tier: "coach" },
         { name: "Kelly Stone", title: "Transportation, Mentor", tier: "coach" },
          { name: "Olof Bakke", title: "Alumni '22-'25 Team 4166", tier: "Mentor" },
         
