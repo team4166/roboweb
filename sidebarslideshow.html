@@ -577,9 +577,10 @@
                     return;
                 }
 
-                // Log the refresh but don't reload — Google Slides auto-refreshes the embed.
-                // Forcing a page reload every 30 minutes was causing hangs.
-                console.log('Slideshow refresh triggered (iframe handles auto-refresh).');
+                // Reload just the iframe (not the whole page) to pick up presentation changes
+                // This is safer than full page reload and won't hang
+                console.log('Refreshing slideshow iframe for content updates...');
+                iframe.src = currentSrc + '&t=' + Date.now();
             } catch (error) {
                 console.error('Error refreshing slideshow:', error.message);
             }
