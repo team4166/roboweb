@@ -522,23 +522,9 @@
 
         let isRightLayout = false;
         let layoutTimer;
-        let lastActivityTime = Date.now();
-        let watchdogTimer = null;
 
-        // Watchdog timer to detect frozen script
-        function resetWatchdog() {
-            lastActivityTime = Date.now();
-            
-            if (watchdogTimer) {
-                clearTimeout(watchdogTimer);
-            }
-            
-            // If no activity for 5 minutes, reload the page
-            watchdogTimer = setTimeout(() => {
-                console.error('Watchdog timeout: Page appears frozen. Reloading...');
-                window.location.reload();
-            }, 5 * 60 * 1000); // 5 minutes
-        }
+        // Removed watchdog timer — it was causing the "script not responding" hang.
+        // Instead, we rely on proper error handling in each function.
 
         // Update time display
         function updateTime() {
@@ -591,10 +577,9 @@
                     return;
                 }
 
-                // Instead of reloading the iframe (which can hang), just reload the entire page
-                // This is safer and more reliable for embedded content in kiosk mode
-                console.log('Initiating page reload for slideshow refresh...');
-                window.location.reload();
+                // Log the refresh but don't reload — Google Slides auto-refreshes the embed.
+                // Forcing a page reload every 30 minutes was causing hangs.
+                console.log('Slideshow refresh triggered (iframe handles auto-refresh).');
             } catch (error) {
                 console.error('Error refreshing slideshow:', error.message);
             }
@@ -702,33 +687,34 @@
         function init() {
             console.log('Initializing Mora Display Combo...');
             
-            // Start watchdog timer
-            resetWatchdog();
-            
             try {
                 updateTime();
-                fetchWeatherData();
             } catch (error) {
-                console.error('Error during initialization:', error.message);
+                console.error('Error updating time:', error.message);
             }
             
-            // Update time every second
+            // Fetch weather asynchronously — don't wait for it
+            fetchWeatherData().catch(error => {
+                console.error('Initial weather fetch failed:', error.message);
+            });
+            
+            // Update time every second (lightweight, non-blocking)
             intervalIds.push(setInterval(() => {
                 try {
                     updateTime();
-                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error updating time:', error.message);
                 }
             }, CONFIG.TIME_UPDATE_INTERVAL));
             
-            // Update weather every 5 minutes
+            // Update weather every 5 minutes (async, won't block)
             intervalIds.push(setInterval(() => {
                 try {
-                    fetchWeatherData();
-                    resetWatchdog(); // Reset on successful update
+                    fetchWeatherData().catch(error => {
+                        console.error('Error updating weather:', error.message);
+                    });
                 } catch (error) {
-                    console.error('Error updating weather:', error.message);
+                    console.error('Error in weather interval:', error.message);
                 }
             }, CONFIG.WEATHER_UPDATE_INTERVAL));
             
@@ -736,25 +722,22 @@
             layoutTimer = setInterval(() => {
                 try {
                     switchLayout();
-                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error switching layout:', error.message);
                 }
             }, CONFIG.LAYOUT_SWITCH_INTERVAL);
             
-            // Refresh slideshow every 30 minutes
+            // Log slideshow refresh (no page reload)
             intervalIds.push(setInterval(() => {
                 try {
                     refreshSlideshow();
-                    resetWatchdog(); // Reset on successful update
                 } catch (error) {
                     console.error('Error refreshing slideshow:', error.message);
                 }
             }, CONFIG.SLIDESHOW_REFRESH_INTERVAL));
             
             console.log('Layout switching enabled: Every 20 minutes for burn-in protection');
-            console.log('Slideshow refresh enabled: Every 30 minutes for content updates');
-            console.log('Watchdog timer enabled: 5 minutes timeout');
+            console.log('Slideshow refresh enabled: Every 30 minutes (iframe auto-refreshes)');
             console.log('Fetch timeout set to: ' + CONFIG.FETCH_TIMEOUT + 'ms');
         }
 
@@ -775,21 +758,11 @@
         function cleanup() {
             intervalIds.forEach(id => clearInterval(id));
             if (layoutTimer) clearInterval(layoutTimer);
-            if (watchdogTimer) clearTimeout(watchdogTimer);
             intervalIds.length = 0;
-            console.log('Intervals and timers cleared for page reload');
+            console.log('Intervals and timers cleared');
         }
 
-        // Auto-reload page daily for kiosk mode stability
-        setTimeout(() => {
-            console.log('Performing scheduled page reload for stability...');
-            try {
-                cleanup();
-            } catch (error) {
-                console.error('Error during cleanup:', error.message);
-            }
-            window.location.reload();
-        }, 24 * 60 * 60 * 1000);
+        // No daily auto-reload — allows page to run stably without forced resets that could cause hangs
     </script>
 </body>
 </html>
